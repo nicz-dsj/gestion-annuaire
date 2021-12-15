@@ -1,0 +1,2 @@
+pour la structure, faire un tableau de structure
+mettre les fonctions dans un fichier .c séparer
