@@ -7,40 +7,86 @@
  */
 
 #include "main.h"
+#include "fonction.c"
 
     
 /**
- * @fn int main(void)
- * @brief programme principale, qui sert à gerer une liste de client dans un fichier csv
+ * @fn int main()
+ * @brief Programme principal
  * 
- * @return 0 par convention pour confirmer la bonne execution du programme 
+ * @return 0 par convention si le progromme s'est bien exécuté
  */
-int main(void) {
-    int mode_ouverture; // un entier qui permet de naviguer dans les différents modes
-    char nom_fichier[TAILLE_MAX]; // un tableau qui prendra comme valeur un nom de fichier entré au clavier
 
-    do {
-        printf("Que souhaitez-vous faire ? \n");
-        printf("Guide : \n");
-        printf("1 : Afficher du contenu \n");
-        printf("0 : Fermer \n");
-        scanf("%d",&mode_ouverture);
+int main(){
+    int validite_fichier=0;
+    int ouverture, mode;
+    int nombre_lignes = 0;
+    char nom_fichier[taille_nom_fichier];
 
-        switch (mode_ouverture) { // test de la saisie du clavier pour basculer entre les modes
-        case 1:
-            printf("Entrez le nom du fichier : ");
-            scanf("%s", &nom_fichier); // saisie du nom du fichier
-            lire_fichier(nom_fichier); // lecture du fichier
-            break;
-        case 0:
-            printf("Fermeture...");
-            sleep(1);
-            break;
-        default:
-            printf(" ! Veuillez saisir une information vailde ! ");
-            break;
-        }
-    } while(mode_ouverture != 0); // boucle acctif tant que l'option fermer n'a pas été choisi
+    do{
+        do{
+            printf("Que souhaitez vous faire ? \n");
+            printf("1 - Ouvrir un fichier \n");
+            printf("0 - Quitter \n");
+            scanf("%d",&ouverture);
+
+            switch(ouverture){ // condition sur le mode d'ouverture entree par l'utilisateur
+                case 0:
+                    printf("Fermeture...");
+                    return 0;
+                    break;
+                case 1:
+                    printf("Entrez le nom du fichier : ");
+                    scanf("%s",&nom_fichier);
+
+                    if(validite(nom_fichier) == 1){ // teste l'existence du fichier grace a la fonction validite()
+                        validite_fichier = 1;
+                    }
+                    else{
+                        printf("Ce fichier n'existe pas \n");
+                    }
+                    break;
+                default:
+                    printf("Veuillez saisir un champ valide");
+                    break;
+            }
+        } while(validite_fichier == 0); // si le fichier existe alors on quitte la boucle
+
+        nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
+        printf("Ce fichier contient %d lignes \n", nombre_lignes);
+
+        do{
+            printf("Que souhaitez vous faire ? \n");
+            printf("1 - Afficher le nombre de lignes \n");
+            printf("2 - Afficher \n");
+            printf("3 - Ajouter une ligne \n");
+            printf("0 - Revenir au debut \n");
+            scanf("%d",&mode);
+
+            switch (mode){ // condition sur le mode de manipulation du fichier entree par l'utilisateur
+            case 0:
+                validite_fichier = 0;
+                break;
+            case 1:
+                printf("Ce fichier contient %d lignes \n", nombre_lignes); // affiche le nombre de lignes
+                break;
+            case 2:
+                lecture(nom_fichier,nombre_lignes); // lit et affiche le contenu du fichier
+                break;
+            case 3:
+                if(ajout(nom_fichier,&nombre_lignes)==1){ // ajoute une ligne de client dans le fichier
+                    printf("Ligne ajoutee");
+                }
+                else{
+                    printf("Erreur");
+                }
+            default:
+                printf("Veuillez saisir un champ valide");
+                break;
+            }
+        }while(validite_fichier == 1); // tant que la validite ne change pas de valeur
+
+    }while(ouverture != 0); // boucle permettant de boucler le menu 
 
     return 0;
 }
