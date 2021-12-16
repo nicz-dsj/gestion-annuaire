@@ -111,7 +111,7 @@ void lecture(char* filename, int taille){
     FILE * pointeur = NULL;
     personne * ligne = malloc((taille+1)*sizeof(personne));
     pointeur = fopen(filename,"a+");
-    int i=0,j=0;
+    int i=0,j=0,deb,fin;
     int virgule = 0;
     char caractere_lu;
 
@@ -126,7 +126,6 @@ void lecture(char* filename, int taille){
         case '\n':
             i=0; 
             virgule=0;
-            affichage(ligne[j].nom,ligne[j].prenom,ligne[j].ville,ligne[j].telephone,ligne[j].code_postal,ligne[j].mail,ligne[j].profession,j+1);
             j++;
             break;
         default:
@@ -172,6 +171,20 @@ void lecture(char* filename, int taille){
         break;
         }
     }while(caractere_lu != EOF);
+
+    printf("Ligne du début : ");
+    scanf("%d",&deb);
+
+    printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
+    scanf("%d",&fin);
+
+    if(fin==0){
+        fin = taille+1;
+    }
+
+    for(j=deb;j<fin;j++){
+        affichage(ligne[j].nom,ligne[j].prenom,ligne[j].ville,ligne[j].telephone,ligne[j].code_postal,ligne[j].mail,ligne[j].profession,j+1);
+    }
 
     free(ligne);
     fclose(pointeur);
