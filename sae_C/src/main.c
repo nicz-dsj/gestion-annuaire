@@ -54,6 +54,8 @@ int main(){
 
         nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
         printf("Ce fichier contient %d lignes \n", nombre_lignes);
+        personne * client = malloc((nombre_lignes+1)*sizeof(personne));
+        lecture(nom_fichier,client,nombre_lignes);
 
         do{
             printf("Que souhaitez vous faire ? \n");
@@ -65,16 +67,19 @@ int main(){
 
             switch (mode){ // condition sur le mode de manipulation du fichier entree par l'utilisateur
             case 0:
+                free(client);
                 validite_fichier = 0;
                 break;
             case 1:
                 printf("Ce fichier contient %d lignes \n", nombre_lignes); // affiche le nombre de lignes
                 break;
-            case 2:
-                lecture(nom_fichier,nombre_lignes); // lit et affiche le contenu du fichier
+            case 2: // lit et affiche le contenu du fichier
+                affichage(client,nombre_lignes);
                 break;
             case 3:
                 if(ajout(nom_fichier,&nombre_lignes)==1){ // ajoute une ligne de client dans le fichier
+                    client = realloc(client,(nombre_lignes+1)*sizeof(personne));
+                    lecture(nom_fichier,client,nombre_lignes); 
                     printf("Ligne ajoutee");
                 }
                 else{

@@ -15,8 +15,8 @@ typedef struct personne personne;
 
 int validite(char*);
 int lignes(char*);
-void lecture(char*,int);
-void afficher(char*,char*,char*,char*,char*,char*,char*,int);
+void lecture(char*, personne *,int);
+void afficher(personne *,int);
 int ajout(char*,int*);
 
 /**
@@ -65,51 +65,19 @@ int lignes(char* filename){
     return nlignes;
 }
 
-
-/**
- * @fn void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num)
- * 
- *
- * @brief fonction qui affiche le contenu du tableau de structure
- * 
- * @param nom correspond à la premiere variable de la structure 
- * @param prenom correspond à la deuxieme variable de la structure 
- * @param ville correspond à la troisieme variable de la structure 
- * @param telephone correspond à la quatrieme variable de la structure 
- * @param code_postal correspond à la cinquieme variable de la structure 
- * @param mail correspond à la sixème variable de la structure 
- * @param profession correspond à la septieme variable de la structure 
- * @param num correspond au numero de la ligne
- */
-
-void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num){
-    printf("================================================ \n");
-    printf("Personne n %d \n", num);
-    printf("================================================ \n");
-    printf("Nom : %s \n",nom);
-    printf("Prenom : %s \n",prenom);
-    printf("Ville : %s \n",ville);
-    printf("Telephone : %s \n",telephone);
-    printf("Code postal : %s \n",code_postal);
-    printf("Mail : %s \n",mail);
-    printf("Profession : %s \n",profession);
-    printf("================================================ \n");
-    printf("\n");
-}
-
 /**
  * @fn void lecture(char* filename, int taille, int mode)
  * 
  * @brief fonction qui lit les caracteres du fichier
  * 
  * @param filename correspondant au nom du fichier 
+ * @param ligne
  * @param taille taille du tableau de structures
  * @return /
  */
 
-void lecture(char* filename, int taille){
+void lecture(char* filename, personne * ligne, int taille){
     FILE * pointeur = NULL;
-    personne * ligne = malloc((taille+1)*sizeof(personne));
     pointeur = fopen(filename,"a+");
     int i=0,j=0,deb,fin;
     int virgule = 0;
@@ -172,6 +140,22 @@ void lecture(char* filename, int taille){
         }
     }while(caractere_lu != EOF);
 
+    fclose(pointeur);
+}
+
+/**
+ * @fn void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num)
+ * 
+ *
+ * @brief fonction qui affiche le contenu du tableau de structure
+ * 
+ * @param ligne 
+ * @param taille 
+ */
+
+void affichage(personne * ligne, int taille){
+    int i,deb,fin;
+
     printf("Ligne du début : ");
     scanf("%d",&deb);
 
@@ -179,17 +163,25 @@ void lecture(char* filename, int taille){
     scanf("%d",&fin);
 
     if(fin==0){
-        fin = taille+1;
+        fin = taille;
     }
 
-    for(j=deb;j<fin;j++){
-        affichage(ligne[j].nom,ligne[j].prenom,ligne[j].ville,ligne[j].telephone,ligne[j].code_postal,ligne[j].mail,ligne[j].profession,j+1);
+    for(i=deb-1;i<fin;i++){
+        printf("================================================ \n");
+        printf("Personne n %d \n", i+1);
+        printf("================================================ \n");
+        printf("Nom : %s \n",ligne[i].nom);
+        printf("Prenom : %s \n",ligne[i].prenom);
+        printf("Ville : %s \n",ligne[i].ville);
+        printf("Telephone : %s \n",ligne[i].telephone);
+        printf("Code postal : %s \n",ligne[i].code_postal);
+        printf("Mail : %s \n",ligne[i].mail);
+        printf("Profession : %s \n",ligne[i].profession);
+        printf("================================================ \n");
+        printf("\n");
     }
 
-    free(ligne);
-    fclose(pointeur);
 }
-
 
 /**
  * @fn int ajout(char * filename, int * taille)
