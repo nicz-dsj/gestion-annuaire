@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define taille_tableau 50
 #define taille_ligne 256
 #define taille_nom_fichier 50
 
@@ -30,8 +29,8 @@ typedef struct personne personne;
 
 int validite(char*);
 int lignes(char*);
-void lecture(char*,int);
-void afficher(char*,char*,char*,char*,char*,char*,char*,int);
+void lecture(char*, personne *,int);
+void afficher(personne *,int);
 int ajout(char*,int*);
 
 /**
@@ -77,6 +76,8 @@ int main(){
 
         nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
         printf("Ce fichier contient %d lignes \n", nombre_lignes);
+        personne * client = malloc((nombre_lignes+1)*sizeof(personne));
+        lecture(nom_fichier,client,nombre_lignes);
 
         do{
             printf("Que souhaitez vous faire ? \n");
@@ -88,16 +89,19 @@ int main(){
 
             switch (mode){ // condition sur le mode de manipulation du fichier entree par l'utilisateur
             case 0:
+                free(client);
                 validite_fichier = 0;
                 break;
             case 1:
                 printf("Ce fichier contient %d lignes \n", nombre_lignes); // affiche le nombre de lignes
                 break;
-            case 2:
-                lecture(nom_fichier,nombre_lignes); // lit et affiche le contenu du fichier
+            case 2: // lit et affiche le contenu du fichier
+                affichage(client,nombre_lignes);
                 break;
             case 3:
                 if(ajout(nom_fichier,&nombre_lignes)==1){ // ajoute une ligne de client dans le fichier
+                    client = realloc(client,(nombre_lignes+1)*sizeof(personne));
+                    lecture(nom_fichier,client,nombre_lignes); 
                     printf("Ligne ajoutee");
                 }
                 else{
@@ -170,9 +174,8 @@ int lignes(char* filename){
  * @return /
  */
 
-void lecture(char* filename, int taille){
+void lecture(char* filename, personne * ligne, int taille){
     FILE * pointeur = NULL;
-    personne * ligne = malloc((taille+1)*sizeof(personne));
     pointeur = fopen(filename,"a+");
     int i=0,j=0,deb,fin;
     int virgule = 0;
@@ -235,21 +238,6 @@ void lecture(char* filename, int taille){
         }
     }while(caractere_lu != EOF);
 
-    printf("Ligne du début : ");
-    scanf("%d",&deb);
-
-    printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
-    scanf("%d",&fin);
-
-    if(fin==0){
-        fin = taille+1;
-    }
-
-    for(j=deb;j<fin;j++){
-        affichage(ligne[j].nom,ligne[j].prenom,ligne[j].ville,ligne[j].telephone,ligne[j].code_postal,ligne[j].mail,ligne[j].profession,j+1);
-    }
-
-    free(ligne);
     fclose(pointeur);
 }
 
@@ -269,19 +257,34 @@ void lecture(char* filename, int taille){
  * @param num correspond au numero de la ligne
  */
 
-void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num){
-    printf("================================================ \n");
-    printf("Personne n %d \n", num);
-    printf("================================================ \n");
-    printf("Nom : %s \n",nom);
-    printf("Prenom : %s \n",prenom);
-    printf("Ville : %s \n",ville);
-    printf("Telephone : %s \n",telephone);
-    printf("Code postal : %s \n",code_postal);
-    printf("Mail : %s \n",mail);
-    printf("Profession : %s \n",profession);
-    printf("================================================ \n");
-    printf("\n");
+void affichage(personne * ligne, int taille){
+    int i,deb,fin;
+
+    printf("Ligne du début : ");
+    scanf("%d",&deb);
+
+    printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
+    scanf("%d",&fin);
+
+    if(fin==0){
+        fin = taille;
+    }
+
+    for(i=deb-1;i<fin;i++){
+        printf("================================================ \n");
+        printf("Personne n %d \n", i+1);
+        printf("================================================ \n");
+        printf("Nom : %s \n",ligne[i].nom);
+        printf("Prenom : %s \n",ligne[i].prenom);
+        printf("Ville : %s \n",ligne[i].ville);
+        printf("Telephone : %s \n",ligne[i].telephone);
+        printf("Code postal : %s \n",ligne[i].code_postal);
+        printf("Mail : %s \n",ligne[i].mail);
+        printf("Profession : %s \n",ligne[i].profession);
+        printf("================================================ \n");
+        printf("\n");
+    }
+
 }
 
 /**
