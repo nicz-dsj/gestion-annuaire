@@ -156,11 +156,15 @@ void lecture(char* filename, personne * ligne, int taille){
 void affichage(personne * ligne, int taille){
     int i,deb,fin;
 
-    printf("Ligne du debut (0 si vous voulez afficher du debut): ");
-    scanf("%d",&deb);
+    do{
+        printf("Ligne du debut (0 si vous voulez afficher du debut): ");
+        scanf("%d",&deb);
+    }while(deb<0);
 
-    printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
-    scanf("%d",&fin);
+    do{
+        printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
+        scanf("%d",&fin);
+    }while(fin<0);
 
     if(fin==0){
         fin = taille;
@@ -208,8 +212,10 @@ int ajout(char * filename, int * taille){
 
     int i,n,choix;
 
-    printf("Combien de personnes voulez vous ajouter ? : ");
-    scanf("%d",&n);
+    do{
+        printf("Combien de personnes voulez vous ajouter ? : ");
+        scanf("%d",&n);
+    }while(n<0);
 
     *taille = *taille+n;
 

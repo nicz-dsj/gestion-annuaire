@@ -83,7 +83,7 @@ int main(){
                     printf("Ligne ajoutee");
                 }
                 else{
-                    printf("Erreur");
+                    printf("Erreur \n");
                 }
             default:
                 printf("Veuillez saisir un champ valide");
