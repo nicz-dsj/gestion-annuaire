@@ -156,7 +156,7 @@ void lecture(char* filename, personne * ligne, int taille){
 void affichage(personne * ligne, int taille){
     int i,deb,fin;
 
-    printf("Ligne du début : ");
+    printf("Ligne du debut (0 si vous voulez afficher du debut): ");
     scanf("%d",&deb);
 
     printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
@@ -166,7 +166,14 @@ void affichage(personne * ligne, int taille){
         fin = taille;
     }
 
-    for(i=deb-1;i<fin;i++){
+    if (deb==0){
+        i=0;
+    }
+    else{
+        i=deb-1;
+    }
+
+    while(i<fin){
         printf("================================================ \n");
         printf("Personne n %d \n", i+1);
         printf("================================================ \n");
@@ -179,6 +186,7 @@ void affichage(personne * ligne, int taille){
         printf("Profession : %s \n",ligne[i].profession);
         printf("================================================ \n");
         printf("\n");
+        i++;
     }
 
 }
