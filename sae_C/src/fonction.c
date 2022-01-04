@@ -1,8 +1,8 @@
 #include "main.h"
 
 struct personne{ // creation de structure pour le client
-    char nom[50];
     char prenom[50];
+    char nom[50];
     char ville[50];
     char telephone[50];
     char code_postal[50];
@@ -20,9 +20,9 @@ void afficher(personne *,int);
 int ajout(char*,int*);
 
 /**
- * @fn int validite(char* filename) 
+ * @fn int validite(char* filename)
  * @brief teste l'existence du fichier
- * 
+ *
  * @param filename chaine de caractere representant le nom du fichier à vérifier
  * @return 0 si le fichier n'existe pas, 1 si le fichier existe
  */
@@ -42,9 +42,9 @@ int validite(char* filename){
 
 /**
  * @fn int lignes(char* filename)
- * 
- * @brief 
- * 
+ *
+ * @brief
+ *
  * @param filename chaine de caractere representant le nom du fichier où il faut calculer le nombre de lignes
  * @return int nlignes -> le nombre de lignes
  */
@@ -67,10 +67,10 @@ int lignes(char* filename){
 
 /**
  * @fn void lecture(char* filename, int taille, int mode)
- * 
+ *
  * @brief fonction qui lit les caracteres du fichier
- * 
- * @param filename correspondant au nom du fichier 
+ *
+ * @param filename correspondant au nom du fichier
  * @param ligne
  * @param taille taille du tableau de structures
  * @return /
@@ -92,7 +92,7 @@ void lecture(char* filename, personne * ligne, int taille){
             i=0;
             break;
         case '\n':
-            i=0; 
+            i=0;
             virgule=0;
             j++;
             break;
@@ -145,12 +145,12 @@ void lecture(char* filename, personne * ligne, int taille){
 
 /**
  * @fn void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num)
- * 
+ *
  *
  * @brief fonction qui affiche le contenu du tableau de structure
- * 
- * @param ligne 
- * @param taille 
+ *
+ * @param ligne
+ * @param taille
  */
 
 void affichage(personne * ligne, int taille){
@@ -192,14 +192,13 @@ void affichage(personne * ligne, int taille){
         printf("\n");
         i++;
     }
-
 }
 
 /**
  * @fn int ajout(char * filename, int * taille)
  *
  * @brief permet d'ajouter un client
- * 
+ *
  * @param filename correspond au nom du fichier
  * @param taille correspond au nombre de lignes du fichier
  * @return 1 si la fonction s'est bien exécutée, 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur
@@ -222,15 +221,15 @@ int ajout(char * filename, int * taille){
     for(i=0;i<n && n!=0;i++){
         printf("Prenom : (\"/\" pour passer) : ");
         scanf("%s",ligne.prenom);
-        if(strcmp(ligne.nom, "/") != 0){
-            fprintf(fichier,"%s",ligne.nom);
+        if(strcmp(ligne.prenom, "/") != 0){
+            fprintf(fichier,"%s",ligne.prenom);
         }
         fprintf(fichier,",");
 
         printf("Nom (\"/\" pour passer) : ");
         scanf("%s",ligne.nom);
-        if(strcmp(ligne.prenom, "/") != 0){
-            fprintf(fichier,"%s",ligne.prenom);
+        if(strcmp(ligne.nom, "/") != 0){
+            fprintf(fichier,"%s",ligne.nom);
         }
         fprintf(fichier,",");
 
