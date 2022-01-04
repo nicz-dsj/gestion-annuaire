@@ -99,14 +99,14 @@ void lecture(char* filename, personne * ligne, int taille){
         default:
             switch (virgule){
             case 0:
-                ligne[j].nom[i] = caractere_lu;
-                i++;
-                ligne[j].nom[i] = '\0';
-                break;
-            case 1:
                 ligne[j].prenom[i] = caractere_lu;
                 i++;
                 ligne[j].prenom[i] = '\0';
+                break;
+            case 1:
+                ligne[j].nom[i] = caractere_lu;
+                i++;
+                ligne[j].nom[i] = '\0';
                 break;
             case 2:
                 ligne[j].ville[i] = caractere_lu;
@@ -181,8 +181,8 @@ void affichage(personne * ligne, int taille){
         printf("================================================ \n");
         printf("Personne n %d \n", i+1);
         printf("================================================ \n");
-        printf("Nom : %s \n",ligne[i].nom);
         printf("Prenom : %s \n",ligne[i].prenom);
+        printf("Nom : %s \n",ligne[i].nom);
         printf("Ville : %s \n",ligne[i].ville);
         printf("Telephone : %s \n",ligne[i].telephone);
         printf("Code postal : %s \n",ligne[i].code_postal);
@@ -220,28 +220,54 @@ int ajout(char * filename, int * taille){
     *taille = *taille+n;
 
     for(i=0;i<n && n!=0;i++){
-        printf("Nom : ");
-        scanf("%s",ligne.nom);
-
-        printf("Prenom : ");
+        printf("Prenom : (\"/\" pour passer) : ");
         scanf("%s",ligne.prenom);
+        if(strcmp(ligne.nom, "/") != 0){
+            fprintf(fichier,"%s",ligne.nom);
+        }
+        fprintf(fichier,",");
 
-        printf("Ville : ");
+        printf("Nom (\"/\" pour passer) : ");
+        scanf("%s",ligne.nom);
+        if(strcmp(ligne.prenom, "/") != 0){
+            fprintf(fichier,"%s",ligne.prenom);
+        }
+        fprintf(fichier,",");
+
+        printf("Ville (\"/\" pour passer) : ");
         scanf("%s",ligne.ville);
+        if(strcmp(ligne.ville, "/") != 0){
+            fprintf(fichier,"%s",ligne.ville);
+        }
+        fprintf(fichier,",");
 
-        printf("Telephone : ");
+        printf("Telephone (\"/\" pour passer) : ");
         scanf("%s",ligne.telephone);
+        if(strcmp(ligne.telephone, "/") != 0){
+            fprintf(fichier,"%s",ligne.telephone);
+        }
+        fprintf(fichier,",");
 
-        printf("Code Postal : ");
+        printf("Code Postal (\"/\" pour passer) : ");
         scanf("%s",ligne.code_postal);
+        if(strcmp(ligne.code_postal, "/") != 0){
+            fprintf(fichier,"%s",ligne.code_postal);
+        }
+        fprintf(fichier,",");
 
-        printf("Mail : ");
+        printf("Mail (\"/\" pour passer) : ");
         scanf("%s",ligne.mail);
+        if(strcmp(ligne.mail, "/") != 0){
+            fprintf(fichier,"%s",ligne.mail);
+        }
+        fprintf(fichier,",");
 
-        printf("Profession : ");
+        printf("Profession (\"/\" pour passer) : ");
         scanf("%s",ligne.profession);
-
-        fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",ligne.nom,ligne.prenom,ligne.ville,ligne.telephone,ligne.code_postal,ligne.mail,ligne.profession);
+        if(strcmp(ligne.profession, "/") != 0){
+            fprintf(fichier,"%s",ligne.profession);
+        }
+        fprintf(fichier,"\n");
     }
 
     fclose(fichier);

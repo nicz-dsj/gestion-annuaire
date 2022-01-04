@@ -18,9 +18,7 @@
  */
 
 int main(){
-    int validite_fichier=0;
-    int ouverture, mode;
-    int nombre_lignes = 0;
+    int validite_fichier=0, ouverture, mode, nombre_lignes = 0, *tableau_indice;
     char nom_fichier[taille_nom_fichier];
 
     do{
@@ -53,15 +51,16 @@ int main(){
         } while(validite_fichier == 0); // si le fichier existe alors on quitte la boucle
 
         nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
-        printf("Ce fichier contient %d lignes \n", nombre_lignes);
+        printf("Ce fichier contient %d clients \n", nombre_lignes);
         personne * client = malloc((nombre_lignes+1)*sizeof(personne));
         lecture(nom_fichier,client,nombre_lignes);
 
         do{
             printf("Que souhaitez vous faire ? \n");
-            printf("1 - Afficher le nombre de lignes \n");
-            printf("2 - Afficher \n");
-            printf("3 - Ajouter une ligne \n");
+            printf("1 - Afficher le nombre de clients \n");
+            printf("2 - Afficher les clients\n");
+            printf("3 - Rechercher un client\n");
+            printf("4 - Ajouter un client \n");
             printf("0 - Revenir au debut \n");
             scanf("%d",&mode);
 
@@ -71,19 +70,21 @@ int main(){
                 validite_fichier = 0;
                 break;
             case 1:
-                printf("Ce fichier contient %d lignes \n", nombre_lignes); // affiche le nombre de lignes
+                printf("Cet contient %d clients \n", nombre_lignes); // affiche le nombre de lignes
                 break;
             case 2: // lit et affiche le contenu du fichier
                 affichage(client,nombre_lignes);
                 break;
             case 3:
+                break;
+            case 4:
                 if(ajout(nom_fichier,&nombre_lignes)==1){ // ajoute une ligne de client dans le fichier
                     client = realloc(client,(nombre_lignes+1)*sizeof(personne));
                     lecture(nom_fichier,client,nombre_lignes); 
-                    printf("Ligne ajoutee");
+                    printf("Client ajoute");
                 }
                 else{
-                    printf("Erreur \n");
+                    printf("Erreur lors de l'ajout du client \n");
                 }
             default:
                 printf("Veuillez saisir un champ valide");
