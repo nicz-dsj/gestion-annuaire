@@ -21,7 +21,7 @@ int main(){
     int validite_fichier=0, ouverture, mode, nombre_lignes = 0, *tableau_indice;
     char nom_fichier[taille_nom_fichier];
 
-    while(1){
+    while(1){ // boucle premettant de boucler le programme
         do{
             printf("Que souhaitez vous faire ? \n");
             printf("1 - Ouvrir un fichier \n");
