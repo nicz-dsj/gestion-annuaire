@@ -91,7 +91,11 @@ int main(){
                 validite_fichier = 0;
                 break;
             case 1:
-                printf("Cet contient %d clients \n", nombre_lignes); // affiche le nombre de lignes
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Nombres de clients :"); // affiche le nombre de lignes
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73d |\n",nombre_lignes);
+                printf(" ---------------------------------------------------------------------------\n\n");
                 break;
             case 2: // lit et affiche le contenu du fichier
             do{
