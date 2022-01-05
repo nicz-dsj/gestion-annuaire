@@ -15,8 +15,11 @@ typedef struct personne personne;
 
 int validite(char*);
 int lignes(char*);
-void lecture(char*, personne *,int);
-void afficher(personne *,int);
+void lecture(char*,personne*,int);
+void remplissage(int*,int);
+void permuter(int*,int*);
+void tri_rapide_indirect(personne*,int*,int,int);
+void afficher(personne*,int*,int);
 int ajout(char*,int*);
 
 /**
@@ -71,12 +74,12 @@ int lignes(char* filename){
  * @brief fonction qui lit les caracteres du fichier
  *
  * @param filename correspondant au nom du fichier
- * @param ligne
+ * @param client
  * @param taille taille du tableau de structures
  * @return /
  */
 
-void lecture(char* filename, personne * ligne, int taille){
+void lecture(char* filename, personne * client, int taille){
     FILE * pointeur = NULL;
     pointeur = fopen(filename,"a+");
     int i=0,j=0,deb,fin;
@@ -99,39 +102,39 @@ void lecture(char* filename, personne * ligne, int taille){
         default:
             switch (virgule){
             case 0:
-                ligne[j].prenom[i] = caractere_lu;
+                client[j].prenom[i] = caractere_lu;
                 i++;
-                ligne[j].prenom[i] = '\0';
+                client[j].prenom[i] = '\0';
                 break;
             case 1:
-                ligne[j].nom[i] = caractere_lu;
+                client[j].nom[i] = caractere_lu;
                 i++;
-                ligne[j].nom[i] = '\0';
+                client[j].nom[i] = '\0';
                 break;
             case 2:
-                ligne[j].ville[i] = caractere_lu;
+                client[j].ville[i] = caractere_lu;
                 i++;
-                ligne[j].ville[i] = '\0';
+                client[j].ville[i] = '\0';
                 break;
             case 3:
-                ligne[j].telephone[i] = caractere_lu;
+                client[j].telephone[i] = caractere_lu;
                 i++;
-                ligne[j].telephone[i] = '\0';
+                client[j].telephone[i] = '\0';
                 break;
             case 4:
-                ligne[j].code_postal[i] = caractere_lu;
+                client[j].code_postal[i] = caractere_lu;
                 i++;
-                ligne[j].code_postal[i] = '\0';
+                client[j].code_postal[i] = '\0';
                 break;
             case 5:
-                ligne[j].mail[i] = caractere_lu;
+                client[j].mail[i] = caractere_lu;
                 i++;
-                ligne[j].mail[i] = '\0';
+                client[j].mail[i] = '\0';
                 break;
             case 6:
-                ligne[j].profession[i] = caractere_lu;
+                client[j].profession[i] = caractere_lu;
                 i++;
-                ligne[j].profession[i] = '\0';
+                client[j].profession[i] = '\0';
                 break;
             default:
                 break;
@@ -143,26 +146,65 @@ void lecture(char* filename, personne * ligne, int taille){
     fclose(pointeur);
 }
 
+void remplissage(int * tableau, int taille){
+    int i, *j;
+    for(i=0;i<taille;i++){
+        tableau[i] = i;
+    }
+}
+
+void permuter(int * a, int * b){
+    int temp;
+
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void tri_rapide_indirect(personne * client, int * index, int deb, int fin){
+    int pivot, i, j;
+    if(deb < fin){
+        pivot = deb;
+        i = deb;
+        j = fin;
+
+        while(i<j){
+            while(strcmp(client[index[i]].nom, client[index[pivot]].nom) <= 0 && i <= j){
+                i++;
+            }
+            while(strcmp(client[index[j]].nom, client[index[pivot]].nom) > 0 && i <= j){
+                j--;
+            }
+            if(i<j){
+                permuter(&index[i],&index[j]);
+            }
+        }
+        permuter(&index[pivot],&index[j]);
+        tri_rapide_indirect(client,index,deb,j-1);
+        tri_rapide_indirect(client,index,j+1,fin);
+    }
+}
+
 /**
  * @fn void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num)
  *
  *
  * @brief fonction qui affiche le contenu du tableau de structure
  *
- * @param ligne
+ * @param client
  * @param taille
  */
 
-void affichage(personne * ligne, int taille){
+void affichage(personne * client, int * index, int taille){
     int i,deb,fin;
 
     do{
-        printf("Ligne du debut (0 si vous voulez afficher du debut): ");
+        printf("client du debut (0 si vous voulez afficher du debut): ");
         scanf("%d",&deb);
     }while(deb<0);
 
     do{
-        printf("Ligne de fin (0 si vous voulez afficher jusqu'a la fin) : ");
+        printf("client de fin (0 si vous voulez afficher jusqu'a la fin) : ");
         scanf("%d",&fin);
     }while(fin<0);
 
@@ -178,18 +220,37 @@ void affichage(personne * ligne, int taille){
     }
 
     while(i<fin){
-        printf("================================================ \n");
-        printf("Personne n %d \n", i+1);
-        printf("================================================ \n");
-        printf("Prenom : %s \n",ligne[i].prenom);
-        printf("Nom : %s \n",ligne[i].nom);
-        printf("Ville : %s \n",ligne[i].ville);
-        printf("Telephone : %s \n",ligne[i].telephone);
-        printf("Code postal : %s \n",ligne[i].code_postal);
-        printf("Mail : %s \n",ligne[i].mail);
-        printf("Profession : %s \n",ligne[i].profession);
-        printf("================================================ \n");
-        printf("\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("| %-73d |\n",i+1);
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Prenom",client[index[i]].prenom);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Nom",client[index[i]].nom);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Ville",client[index[i]].ville);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Telephone",client[index[i]].telephone);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Code Postal",client[index[i]].code_postal);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Mail",client[index[i]].mail);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("|                      |                                                    |\n");
+        printf("| %-20s | %-50s |\n","Profession",client[index[i]].profession);
+        printf("|                      |                                                    |\n");
+        printf(" ---------------------------------------------------------------------------\n\n");
         i++;
     }
 }
@@ -200,12 +261,12 @@ void affichage(personne * ligne, int taille){
  * @brief permet d'ajouter un client
  *
  * @param filename correspond au nom du fichier
- * @param taille correspond au nombre de lignes du fichier
+ * @param taille correspond au nombre de clients du fichier
  * @return 1 si la fonction s'est bien exécutée, 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur
  */
 
 int ajout(char * filename, int * taille){
-    personne ligne;
+    personne client;
     FILE * fichier;
     fichier = fopen(filename,"a+");
 
@@ -220,51 +281,51 @@ int ajout(char * filename, int * taille){
 
     for(i=0;i<n && n!=0;i++){
         printf("Prenom : (\"/\" pour passer) : ");
-        scanf("%s",ligne.prenom);
-        if(strcmp(ligne.prenom, "/") != 0){
-            fprintf(fichier,"%s",ligne.prenom);
+        scanf("%s",client.prenom);
+        if(strcmp(client.prenom, "/") != 0){
+            fprintf(fichier,"%s",client.prenom);
         }
         fprintf(fichier,",");
 
         printf("Nom (\"/\" pour passer) : ");
-        scanf("%s",ligne.nom);
-        if(strcmp(ligne.nom, "/") != 0){
-            fprintf(fichier,"%s",ligne.nom);
+        scanf("%s",client.nom);
+        if(strcmp(client.nom, "/") != 0){
+            fprintf(fichier,"%s",client.nom);
         }
         fprintf(fichier,",");
 
         printf("Ville (\"/\" pour passer) : ");
-        scanf("%s",ligne.ville);
-        if(strcmp(ligne.ville, "/") != 0){
-            fprintf(fichier,"%s",ligne.ville);
+        scanf("%s",client.ville);
+        if(strcmp(client.ville, "/") != 0){
+            fprintf(fichier,"%s",client.ville);
         }
         fprintf(fichier,",");
 
         printf("Telephone (\"/\" pour passer) : ");
-        scanf("%s",ligne.telephone);
-        if(strcmp(ligne.telephone, "/") != 0){
-            fprintf(fichier,"%s",ligne.telephone);
+        scanf("%s",client.telephone);
+        if(strcmp(client.telephone, "/") != 0){
+            fprintf(fichier,"%s",client.telephone);
         }
         fprintf(fichier,",");
 
         printf("Code Postal (\"/\" pour passer) : ");
-        scanf("%s",ligne.code_postal);
-        if(strcmp(ligne.code_postal, "/") != 0){
-            fprintf(fichier,"%s",ligne.code_postal);
+        scanf("%s",client.code_postal);
+        if(strcmp(client.code_postal, "/") != 0){
+            fprintf(fichier,"%s",client.code_postal);
         }
         fprintf(fichier,",");
 
         printf("Mail (\"/\" pour passer) : ");
-        scanf("%s",ligne.mail);
-        if(strcmp(ligne.mail, "/") != 0){
-            fprintf(fichier,"%s",ligne.mail);
+        scanf("%s",client.mail);
+        if(strcmp(client.mail, "/") != 0){
+            fprintf(fichier,"%s",client.mail);
         }
         fprintf(fichier,",");
 
         printf("Profession (\"/\" pour passer) : ");
-        scanf("%s",ligne.profession);
-        if(strcmp(ligne.profession, "/") != 0){
-            fprintf(fichier,"%s",ligne.profession);
+        scanf("%s",client.profession);
+        if(strcmp(client.profession, "/") != 0){
+            fprintf(fichier,"%s",client.profession);
         }
         fprintf(fichier,"\n");
     }
