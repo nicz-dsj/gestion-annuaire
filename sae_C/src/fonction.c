@@ -407,68 +407,54 @@ int ajout(char * filename, int * taille){
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Nouveau client");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.prenom, "/") != 0){
             printf("| %-20s | %-50s |\n","Prenom",client.prenom);
         }
         else{
             printf("| %-20s |                                                    |\n","Prenom");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.nom, "/") != 0){
             printf("| %-20s | %-50s |\n","Nom",client.nom);
         }
         else{
             printf("| %-20s |                                                    |\n","Nom");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.ville, "/") != 0){
             printf("| %-20s | %-50s |\n","Ville",client.ville);
         }
         else{
             printf("| %-20s |                                                    |\n","Ville");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.code_postal, "/") != 0){
             printf("| %-20s | %-50s |\n","Code Postal",client.code_postal);
         }
         else{
             printf("| %-20s |                                                    |\n","Code Postal");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.telephone, "/") != 0){
             printf("| %-20s | %-50s |\n","Telephone",client.telephone);
         }
         else{
             printf("| %-20s |                                                    |\n","Telephone");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.mail, "/") != 0){
             printf("| %-20s | %-50s |\n","Mail",client.mail);
         }
         else{
             printf("| %-20s |                                                    |\n","Mail");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         if(strcmp(client.profession, "/") != 0){
             printf("| %-20s | %-50s |\n","Profession",client.profession);
         }
         else{
             printf("| %-20s |                                                    |\n","Profession");
         }
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n\n");
 
         do{
