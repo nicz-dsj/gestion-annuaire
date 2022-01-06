@@ -76,7 +76,7 @@ int main(){
         else{
             nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
 
-            tableau_lignes = malloc(nombre_lignes*sizeof(char*));
+            tableau_lignes = malloc((nombre_lignes+1)*sizeof(char*));
             for(i=0;i<nombre_lignes;i++){
                 tableau_lignes[i] = malloc(taille_ligne*sizeof(char));
             }
