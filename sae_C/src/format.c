@@ -1,5 +1,12 @@
 #include "main.h"
 
+int ctrl_extension(char*,int);
+int format_fichier(char**,int,int);
+int ctrl_virgule(char*,int);
+int format_code_postal(char*,int);
+int format_telephone(char*,int);
+int format_mail(char*,int);
+
 int ctrl_extension(char * filename, int longueur){
     int ext=strrchr(filename,'.csv'), valide=1;
 
