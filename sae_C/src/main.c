@@ -76,12 +76,12 @@ int main(){
         else{
             nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
 
-            tableau_lignes = malloc((nombre_lignes+1)*sizeof(char*));
+            tableau_lignes = malloc(nombre_lignes*sizeof(char*));
             for(i=0;i<nombre_lignes;i++){
                 tableau_lignes[i] = malloc(taille_ligne*sizeof(char));
             }
             lecture_lignes(nom_fichier,tableau_lignes);
-            format = 1; // format_fichier(tableau_lignes,nombre_lignes,taille_ligne);
+            format = format_fichier(tableau_lignes,nombre_lignes);
 
             if(format==0){
                 printf(" ---------------------------------------------------------------------------\n");
@@ -95,10 +95,10 @@ int main(){
                 validite_fichier = 0;
             }
             else{
-                client = malloc((nombre_lignes+1)*sizeof(personne));
+                client = malloc(nombre_lignes*sizeof(personne));
                 lecture(nom_fichier,client,nombre_lignes);
 
-                tableau_indices = malloc((nombre_lignes+1)*sizeof(int));
+                tableau_indices = malloc(nombre_lignes*sizeof(int));
                 remplissage(tableau_indices,nombre_lignes);
 
                 printf(" ---------------------------------------------------------------------------\n");
@@ -136,7 +136,7 @@ int main(){
                         printf(" ---------------------------------------------------------------------------\n");
                         printf("| %-73s |\n","Nombres de clients :"); // affiche le nombre de lignes
                         printf(" ---------------------------------------------------------------------------\n");
-                        printf("| %-73d |\n",nombre_lignes);
+                        printf("| %-73d |\n",nombre_lignes-1);
                         printf(" ---------------------------------------------------------------------------\n\n");
                         break;
                     case 2: // lit et affiche le contenu du fichier
@@ -214,16 +214,16 @@ int main(){
 
                             free(tableau_indices);
 
-                            tableau_lignes = malloc((nombre_lignes+1)*sizeof(char*));
+                            tableau_lignes = malloc(nombre_lignes*sizeof(char*));
                             for(i=0;i<nombre_lignes;i++){
                                 tableau_lignes[i] = malloc(taille_ligne*sizeof(char));
                             }
                             lecture_lignes(nom_fichier,tableau_lignes);
 
-                            client = realloc(client,(nombre_lignes+1)*sizeof(personne));
+                            client = realloc(client,nombre_lignes*sizeof(personne));
                             lecture(nom_fichier,client,nombre_lignes);
 
-                            tableau_indices = malloc((nombre_lignes+1)*sizeof(int));
+                            tableau_indices = malloc(nombre_lignes*sizeof(int));
                             remplissage(tableau_indices,nombre_lignes);
                         }
                         break;

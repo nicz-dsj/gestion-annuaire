@@ -1,7 +1,7 @@
 #include "main.h"
 
 int ctrl_extension(char*,int);
-int format_fichier(char**,int,int);
+int format_fichier(char**,int);
 int ctrl_virgule(char*,int);
 int format_code_postal(char*,int);
 int format_telephone(char*,int);
@@ -17,17 +17,16 @@ int ctrl_extension(char * filename, int longueur){
     return valide;
 }
 
-int format_fichier(char ** liste, int lignes, int taille){
+int format_fichier(char ** liste, int lignes){
     int i,j,virgules=0,valide=1;
 
-    for(i=0;i<lignes && valide==1;i++){
+    for(i=0;i<lignes-1 && valide==1;i++){
         virgules=0;
-        for(j=0;j<taille;j++){
+        for(j=0;liste[i][j]!='\n';j++){
             if(liste[i][j]==','){
                 virgules=virgules+1;
             }
         }
-        printf("virgules %d",virgules);
         if(virgules!=6){
             valide=0;
         }

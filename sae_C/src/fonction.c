@@ -56,7 +56,7 @@ int lignes(char* filename){
     FILE * pointeur;
     pointeur = fopen(filename,"a+");
 
-    int nlignes = 0;
+    int nlignes = 1;
     char lignes[taille_ligne];
 
     while(fgets(lignes,taille_ligne,pointeur) != NULL){
