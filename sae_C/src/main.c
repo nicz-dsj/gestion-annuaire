@@ -18,8 +18,8 @@
  */
 
 int main(){
-    int i, validite_fichier=0, ouverture,ext, mode, mode2=0, nombre_lignes = 0, *tableau_indices = NULL, format, nouv_client;
-    char nom_fichier[taille_nom_fichier], **tableau_lignes = NULL;
+    int nb_fichiers, i, validite_fichier=0, ouverture,ext, mode, mode2=0, nombre_lignes = 0, *tableau_indices = NULL, format, nouv_client;
+    char nom_fichier[taille_nom_fichier],extension[] = ".csv",**tableau_lignes = NULL;
     personne * client = NULL;
 
     while(1){ // boucle premettant de boucler le programme
@@ -29,6 +29,8 @@ int main(){
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-20d | %-50s |\n",0,"Fermer");
             printf("| %-20d | %-50s |\n",1,"Ouvrir un fichier");
+            printf("| %-20d | %-50s |\n",2,"Creer un fichier");
+            printf("| %-20d | %-50s |\n",3,"Supprimer un fichier");
             printf(" ---------------------------------------------------------------------------\n");
             scanf("%d",&ouverture);
 
@@ -52,6 +54,44 @@ int main(){
 
                     if(validite(nom_fichier) == 1){ // teste l'existence du fichier grace a la fonction validite()
                         validite_fichier = 1;
+                    }
+                    else{
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Ce fichier n'existe pas");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+                    }
+                    break;
+                case 2:
+                    fflush(stdin);
+                    fflush(stdout);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","Nom du fichier a creer :");
+                    printf(" ---------------------------------------------------------------------------\n");
+                    gets(nom_fichier);
+
+                    strcat(nom_fichier,extension);
+
+                    creation_fichier(nom_fichier);
+                    break;
+                case 3:
+                    fflush(stdin);
+                    fflush(stdout);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","Nom du fichier a supprimer :");
+                    printf(" ---------------------------------------------------------------------------\n");
+                    gets(nom_fichier);
+
+                    if(validite(nom_fichier)==1){
+                        if(remove(nom_fichier)==0){
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","Fichier supprime");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
+                        else{
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Erreur lors de la suppression du fichier");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
                     }
                     else{
                         printf(" ---------------------------------------------------------------------------\n");
@@ -160,44 +200,34 @@ int main(){
                             break;
                         case 1:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
-                            mode2=0;
                             break;
                         case 2:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         case 3:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         case 4:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         case 5:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         case 6:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         case 7:
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
-                            affichage(client,tableau_indices,nombre_lignes-1);
-                            mode2=0;
                             break;
                         default:
                             printf(" ---------------------------------------------------------------------------\n");
                             printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
                             printf(" ---------------------------------------------------------------------------\n\n");
                             break;
+                        }
+                        if(mode2 != 0){
+                            affichage(client,tableau_indices,nombre_lignes-1);
+                            mode2=0;
                         }
                     }while(mode2 != 0);
                         break;

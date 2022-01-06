@@ -14,6 +14,7 @@ struct personne{ // creation de structure pour le client
 typedef struct personne personne;
 
 int validite(char*);
+void creation_fichier(char*);
 int lignes(char*);
 void lecture(char*,personne*,int);
 void remplissage(int*,int);
@@ -41,6 +42,15 @@ int validite(char* filename){
         fclose(fichier);
         return 1;
     }
+}
+
+void creation_fichier(char * filename){
+    FILE * pointeur;
+    pointeur = fopen(filename, "a+");
+    printf(" ---------------------------------------------------------------------------\n");
+    printf("| %-73s |\n","Fichier cree");
+    printf(" ---------------------------------------------------------------------------\n");
+    fclose(pointeur);
 }
 
 /**
@@ -308,33 +318,19 @@ void affichage(personne * client, int * index, int taille){
         printf(" ---------------------------------------------------------------------------\n");
         printf("| Ligne %-67d |\n",i+1);
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Prenom",client[index[i]].prenom);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Nom",client[index[i]].nom);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Ville",client[index[i]].ville);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Code Postal",client[index[i]].code_postal);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Telephone",client[index[i]].telephone);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Mail",client[index[i]].mail);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Profession",client[index[i]].profession);
-        printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n\n");
         i++;
     }
@@ -652,7 +648,6 @@ int ajout(char * filename, int * taille){
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","Annulation du processus");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    n=0;
                     break;
                 default:
                     printf(" ---------------------------------------------------------------------------\n");
