@@ -533,7 +533,7 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
     switch (mode)
     {
     case 1:
-        while (trouve == 0 && debut <= fin)
+        while (trouve == 0 && debut < fin)
         {
             pos = (debut + fin)/2;
             if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
@@ -542,6 +542,26 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
             }
             else{
                 if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
+                    printf("plus grand");
+                    debut = pos;
+                }
+                else{
+                    printf("plus petit");
+                    fin = pos;
+                }
+            }
+        }
+        break;
+    case 2:
+        while (trouve == 0 && debut < fin)
+        {
+            pos = (debut + fin)/2;
+            if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
                     debut = pos;
                 }
                 else{
@@ -550,125 +570,101 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
             }
         }
         break;
-    case 2:
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].nom) == 0)
-        {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].nom) > 0)
-            {
-                debut = pos;
-            }
-            else
-                fin = pos;
-        }
-    }
-    break;
     case 3:
-    printf("mode ville");
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
+        while (trouve == 0 && debut <= fin)
         {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].ville) > 0)
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
             {
-                debut = pos;
+                ind = pos;
+                trouve =1;
             }
-            else
-                fin = pos;
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].ville) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
         }
-    }
-    break;
+        break;
     case 4:
-    printf("mode code");
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
+        while (trouve == 0 && debut <= fin)
         {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].code_postal) > 0)
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
             {
-                debut = pos;
+                ind = pos;
+                trouve =1;
             }
-            else
-                fin = pos;
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].code_postal) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
         }
-    }
-    break;
+        break;
     case 5:
-    printf("mode telephone");
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
+        while (trouve == 0 && debut <= fin)
         {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].telephone) > 0)
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
             {
-                debut = pos;
+                ind = pos;
+                trouve =1;
             }
-            else
-                fin = pos;
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].telephone) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
         }
-    }
-    break;
+        break;
     case 6:
-    printf("mode mail");
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
+        while (trouve == 0 && debut <= fin)
         {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].mail) > 0)
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
             {
-                debut = pos;
+                ind = pos;
+                trouve =1;
             }
-            else
-                fin = pos;
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].mail) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
         }
-    }
-    break;
+        break;
     case 7:
-    printf("mode prefession");
-    while (trouve == 0 && debut <= fin)
-    {
-        pos = (debut + fin)/2;
-        if (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
+        while (trouve == 0 && debut <= fin)
         {
-            ind = pos;
-            trouve =1;
-        }
-        else{
-            if (strcmp(valeur_recherche, client[index[pos]].profession) > 0)
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
             {
-                debut = pos;
+                ind = pos;
+                trouve =1;
             }
-            else
-                fin = pos;
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].profession) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
         }
-    }
-    break;
+        break;
     
     default:
         break;

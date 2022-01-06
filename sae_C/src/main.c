@@ -177,6 +177,8 @@ int main(){
                 tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
                 printf("\nle nom a chercher est %s",mot);
                 ind = recherche_dichotomique(mot,client,tableau_indices,nombre_lignes,mode2);
+                if (ind>=0)
+                {
                 printf("recherche effectué");
                 printf(" ---------------------------------------------------------------------------\n");
                 printf(" ---------------------------------------------------------------------------\n");
@@ -207,7 +209,8 @@ int main(){
                 printf("|                      |                                                    |\n");
                 printf("| %-20s | %-50s |\n","Profession",client[tableau_indices[ind]].profession);
                 printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n\n");
+                printf(" ---------------------------------------------------------------------------\n\n"); 
+                }
                     break;
             default:
                 printf(" ---------------------------------------------------------------------------\n");
