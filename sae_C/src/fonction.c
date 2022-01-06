@@ -22,7 +22,7 @@ void permuter(int*,int*);
 void tri_rapide_indirect(personne*,int*,int,int,int);
 void afficher(personne*,int*,int);
 int ajout(char*,int*);
-int recherche_dichotomique(char,personne *, int *, int,int);
+int recherche_dichotomique(char *,personne *, int *, int,int);
 
 /**
  * @fn int validite(char* filename)
@@ -528,26 +528,25 @@ int ajout(char * filename, int * taille){
 }
 
 
-int recherche_dichotomique(char valeur_recherche,personne * client, int * index, int taille, int mode){
-    int ind =-1, pos, trouve = 0, debut = 0, fin = taille;
+int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int taille, int mode){
+    int ind =-1, pos, trouve = 0, debut = 0, fin = taille-1;
     switch (mode)
     {
     case 1:
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
-            {
+            if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].prenom) < 0)
-                {
+                if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
                     debut = pos;
                 }
-                else
+                else{
                     fin = pos;
+                }
             }
         }
         break;
@@ -561,7 +560,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].nom) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].nom) > 0)
             {
                 debut = pos;
             }
@@ -571,6 +570,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
     }
     break;
     case 3:
+    printf("mode ville");
     while (trouve == 0 && debut <= fin)
     {
         pos = (debut + fin)/2;
@@ -580,7 +580,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].ville) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].ville) > 0)
             {
                 debut = pos;
             }
@@ -590,6 +590,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
     }
     break;
     case 4:
+    printf("mode code");
     while (trouve == 0 && debut <= fin)
     {
         pos = (debut + fin)/2;
@@ -599,7 +600,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].code_postal) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].code_postal) > 0)
             {
                 debut = pos;
             }
@@ -609,6 +610,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
     }
     break;
     case 5:
+    printf("mode telephone");
     while (trouve == 0 && debut <= fin)
     {
         pos = (debut + fin)/2;
@@ -618,7 +620,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].telephone) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].telephone) > 0)
             {
                 debut = pos;
             }
@@ -628,6 +630,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
     }
     break;
     case 6:
+    printf("mode mail");
     while (trouve == 0 && debut <= fin)
     {
         pos = (debut + fin)/2;
@@ -637,7 +640,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].mail) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].mail) > 0)
             {
                 debut = pos;
             }
@@ -647,6 +650,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
     }
     break;
     case 7:
+    printf("mode prefession");
     while (trouve == 0 && debut <= fin)
     {
         pos = (debut + fin)/2;
@@ -656,7 +660,7 @@ int recherche_dichotomique(char valeur_recherche,personne * client, int * index,
             trouve =1;
         }
         else{
-            if (strcmp(valeur_recherche, client[index[pos]].profession) < 0)
+            if (strcmp(valeur_recherche, client[index[pos]].profession) > 0)
             {
                 debut = pos;
             }
