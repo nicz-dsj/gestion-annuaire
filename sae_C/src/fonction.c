@@ -1,18 +1,17 @@
 #include "main.h"
+#include "format.c"
 
 struct personne{ // creation de structure pour le client
-    char prenom[50];
-    char nom[50];
-    char ville[50];
-    char code_postal[50];
-    char telephone[50];
-    char mail[50];
-    char profession[50];
+    char prenom[elements];
+    char nom[elements];
+    char ville[elements];
+    char code_postal[elements];
+    char telephone[elements];
+    char mail[elements];
+    char profession[elements];
 };
 
 typedef struct personne personne;
-
-
 
 int validite(char*);
 int lignes(char*);
@@ -54,19 +53,33 @@ int validite(char* filename){
  */
 
 int lignes(char* filename){
-    FILE * fichier;
-    fichier = fopen(filename,"r");
+    FILE * pointeur;
+    pointeur = fopen(filename,"a+");
 
     int nlignes = 0;
     char lignes[taille_ligne];
 
-    while(fgets(lignes,taille_ligne,fichier) != NULL){
+    while(fgets(lignes,taille_ligne,pointeur) != NULL){
         nlignes++;
     }
 
-    fclose(fichier);
+    fclose(pointeur);
 
     return nlignes;
+}
+
+void lecture_lignes(char * filename, char ** tableau2d){
+    FILE * pointeur;
+    pointeur = fopen(filename,"a+");
+    int i=0;
+    char ligne[taille_ligne];
+
+    while(fgets(ligne,taille_ligne,pointeur) != NULL){
+        strcpy(tableau2d[i],ligne);
+        i++;
+    }
+
+    fclose(pointeur);
 }
 
 /**
@@ -148,7 +161,7 @@ void lecture(char* filename, personne * client, int taille){
 }
 
 void remplissage(int * tableau, int taille){
-    int i, *j;
+    int i;
     for(i=0;i<taille;i++){
         tableau[i] = i;
     }
@@ -342,7 +355,7 @@ int ajout(char * filename, int * taille){
     FILE * fichier;
     fichier = fopen(filename,"a+");
 
-    int i,n,choix;
+    int i,n,choix,confirmation=0;
 
     do{
         printf(" ---------------------------------------------------------------------------\n");
@@ -367,43 +380,165 @@ int ajout(char * filename, int * taille){
     *taille = *taille+n;
 
     for(i=0;i<n && n!=0;i++){
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Prenom : (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.prenom);
+        fflush(stdin);
+        fflush(stdout);
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Nom (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.nom);
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Prenom : (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.prenom);
+
+            confirmation = ctrl_virgule(client.prenom,strlen(client.prenom));
+
+            if (strcmp(client.prenom,"/") !=0 ){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation = 1;
+            }
+        }while(confirmation!=1);
+        
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Nom (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.nom);
+
+            confirmation = ctrl_virgule(client.nom,strlen(client.nom));
+
+            if (strcmp(client.nom,"/") !=0 ){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation = 1;
+            }
+        }while(confirmation!=1);
+
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Ville (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.ville);
+
+            confirmation = ctrl_virgule(client.ville,strlen(client.ville));
+
+            if (strcmp(client.ville,"/") !=0 ){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation = 1;
+            }
+        }while(confirmation!=1);
+
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Code Postal (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.code_postal);
+
+            confirmation = format_code_postal(client.code_postal,strlen(client.code_postal));
+
+            if(strcmp(client.code_postal,"/") != 0){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez respecter le format \"000000\"");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+                else if(confirmation==-1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation = 1;
+            }
+        }while(confirmation!=1);
+
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Telephone (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.telephone);
+
+            confirmation = format_telephone(client.telephone,strlen(client.telephone));
+
+            if(strcmp(client.telephone,"/")!=0){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez respecter le format \"00.00.00.00.00\"");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+                else if(confirmation==-1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation=1;
+            }
+        }while(confirmation!=1);
         
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Ville (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.ville);
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Mail (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(client.mail);
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Code Postal (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.code_postal);
+            confirmation = format_mail(client.mail,strlen(client.mail));
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Telephone (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.telephone);
+            if(strcmp(client.mail,"/")!=0){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez respecter le format \"texte@texte.nomdedomaine\"");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+                else if(confirmation==-1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation=1;
+            }
+        }while(confirmation!=1);
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Mail (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.mail);
+        do{
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Profession (\"/\" pour passer) :");
+            printf(" ---------------------------------------------------------------------------\n");
+            scanf("%s",client.profession);
 
+            confirmation = ctrl_virgule(client.profession,strlen(client.profession));
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Profession (\"/\" pour passer) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%s",client.profession);
-
+            if (strcmp(client.profession,"/") !=0 ){
+                if(confirmation==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                    printf(" ---------------------------------------------------------------------------\n");
+                }
+            }
+            else{
+                confirmation = 1;
+            }            
+        }while(confirmation!=1);
+        
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Nouveau client");
         printf(" ---------------------------------------------------------------------------\n");
