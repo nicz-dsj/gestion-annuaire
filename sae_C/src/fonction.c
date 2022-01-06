@@ -362,7 +362,7 @@ int ajout(char * filename, int * taille){
         printf("| %-73s |\n","Gestion d'annuaire - Menu d'ajout de client");
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Combien de clients voulez vous ajouter ? (maximum 10 personnes) :");
-        printf(" ---------------------------------------------------------------------------\n\n");
+        printf(" ---------------------------------------------------------------------------\n");
         scanf("%d",&n);
 
         if(n<0){
@@ -378,6 +378,10 @@ int ajout(char * filename, int * taille){
     }while(n<0 || n>10);
 
     *taille = *taille+n;
+
+    printf(" ---------------------------------------------------------------------------\n");
+    printf("| %-73s |\n","/!\\ Lors de votre saisie veuillez ne pas mettre de virgule");
+    printf(" ---------------------------------------------------------------------------\n\n");
 
     for(i=0;i<n && n!=0;i++){
         fflush(stdin);
@@ -446,6 +450,7 @@ int ajout(char * filename, int * taille){
         do{
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Code Postal (\"/\" pour passer) :");
+            printf("| %-73s |\n","(format : \"00000\")");
             printf(" ---------------------------------------------------------------------------\n");
             gets(client.code_postal);
 
@@ -471,6 +476,7 @@ int ajout(char * filename, int * taille){
         do{
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Telephone (\"/\" pour passer) :");
+            printf("| %-73s |\n","(format : \"00.00.00.00.00\")");
             printf(" ---------------------------------------------------------------------------\n");
             gets(client.telephone);
 
@@ -497,6 +503,7 @@ int ajout(char * filename, int * taille){
         do{
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Mail (\"/\" pour passer) :");
+            printf("| %-73s |\n","(format : \"texte@texte.domaine\")");
             printf(" ---------------------------------------------------------------------------\n");
             gets(client.mail);
 
@@ -505,7 +512,7 @@ int ajout(char * filename, int * taille){
             if(strcmp(client.mail,"/")!=0){
                 if(confirmation==0){
                     printf(" ---------------------------------------------------------------------------\n");
-                    printf("| %-73s |\n","/!\\ Veuillez respecter le format \"texte@texte.nomdedomaine\"");
+                    printf("| %-73s |\n","/!\\ Veuillez respecter le format \"texte@texte.domaine\"");
                     printf(" ---------------------------------------------------------------------------\n");
                 }
                 else if(confirmation==-1){
