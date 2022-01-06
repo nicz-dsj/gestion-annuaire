@@ -76,18 +76,19 @@ int main(){
         else{
             nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
 
-            tableau_lignes = malloc((nombre_lignes+1)*sizeof(char*));
+            tableau_lignes = malloc(nombre_lignes*sizeof(char*));
             for(i=0;i<nombre_lignes;i++){
                 tableau_lignes[i] = malloc(taille_ligne*sizeof(char));
             }
             lecture_lignes(nom_fichier,tableau_lignes);
-            format = format_fichier(tableau_lignes,nombre_lignes,taille_ligne);
+            format = 1; // format_fichier(tableau_lignes,nombre_lignes,taille_ligne);
 
             if(format==0){
                 printf(" ---------------------------------------------------------------------------\n");
                 printf("| %-73s |\n","/!\\ Ce fichier ne correspond pas au format attendu");
                 printf(" ---------------------------------------------------------------------------\n\n");
-                for(i=0;i<taille_ligne;i++){
+
+                for(i=0;i<nombre_lignes;i++){
                     free(tableau_lignes[i]);
                 }
                 free(tableau_lignes);
@@ -120,12 +121,14 @@ int main(){
                     case 0:
                         free(client);
 
-                        for(i=0;i<taille_ligne;i++){
+                        for(i=0;i<nombre_lignes;i++){
                             free(tableau_lignes[i]);
                         }
                         free(tableau_lignes);
 
                         free(tableau_indices);
+
+                        strcpy(nom_fichier, "");
 
                         validite_fichier = 0;
                         break;
@@ -204,7 +207,7 @@ int main(){
                         nouv_client = ajout(nom_fichier,&nombre_lignes);
 
                         if(nouv_client>0){ // ajoute une ligne de client dans le fichier
-                            for(i=0;i<taille_ligne;i++){
+                            for(i=0;i<nombre_lignes;i++){
                                 free(tableau_lignes[i]);
                             }
                             free(tableau_lignes);

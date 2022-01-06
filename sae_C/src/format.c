@@ -18,15 +18,16 @@ int ctrl_extension(char * filename, int longueur){
 }
 
 int format_fichier(char ** liste, int lignes, int taille){
-    int i,j,virgules,valide=1;
+    int i,j,virgules=0,valide=1;
 
-    for(i=0;i<lignes;i++){
+    for(i=0;i<lignes && valide==1;i++){
         virgules=0;
         for(j=0;j<taille;j++){
             if(liste[i][j]==','){
                 virgules=virgules+1;
             }
         }
+        printf("virgules %d",virgules);
         if(virgules!=6){
             valide=0;
         }
