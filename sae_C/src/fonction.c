@@ -13,6 +13,8 @@ struct personne{ // creation de structure pour le client
 
 typedef struct personne personne;
 
+int fichiers();
+void lecture_repertoire(char**);
 int validite(char*);
 void creation_fichier(char*);
 int lignes(char*);
@@ -31,6 +33,57 @@ int ajout(char*,int*);
  * @return 0 si le fichier n'existe pas, 1 si le fichier existe
  */
 
+int fichiers(){
+    int fichiers=0;
+    DIR * dir;
+    struct dirent * entite;
+
+    dir = opendir(".");
+    if(dir != NULL){
+
+        entite = readdir(dir);
+        while(entite != NULL){
+            if(!strcmp(entite->d_name,".") || !strcmp(entite->d_name,"..")){
+                entite = readdir(dir);
+            }
+            else{
+                fichiers++;
+                entite = readdir(dir);
+            }
+            
+        }
+
+        closedir(dir);
+    }
+
+    return fichiers;
+}
+
+void lecture_repertoire(char ** liste){
+    int i;
+
+    DIR * dir;
+    struct dirent * entite;
+
+    dir = opendir(".");
+    if(dir != NULL){
+        i=0;
+        entite = readdir(dir);
+        while(entite != NULL){
+            if(!strcmp(entite->d_name,".") || !strcmp(entite->d_name,"..")){
+                entite = readdir(dir);
+            }
+            else{
+                strcpy(liste[i],entite->d_name);
+                i++;
+                entite = readdir(dir);
+            }
+        }
+
+        closedir(dir);
+    }
+}
+
 int validite(char* filename){
     FILE * fichier = NULL;
     fichier = fopen(filename,"r");
@@ -47,10 +100,8 @@ int validite(char* filename){
 void creation_fichier(char * filename){
     FILE * pointeur;
     pointeur = fopen(filename, "a+");
-    printf(" ---------------------------------------------------------------------------\n");
-    printf("| %-73s |\n","Fichier cree");
-    printf(" ---------------------------------------------------------------------------\n");
     fclose(pointeur);
+
 }
 
 /**
@@ -106,8 +157,12 @@ void lecture_lignes(char * filename, char ** tableau2d){
 void lecture(char* filename, personne * client, int taille){
     FILE * pointeur = NULL;
     pointeur = fopen(filename,"a+");
-    int i=0,j=0,deb,fin;
+    int i=0; 
+    int j=0; 
+    int deb; 
+    int fin;
     int virgule = 0;
+    
     char caractere_lu;
 
     do{
@@ -186,7 +241,9 @@ void permuter(int * a, int * b){
 }
 
 void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int mode){
-    int pivot, i, j;
+    int pivot; 
+    int i; 
+    int j;
     if(deb < fin){
         pivot = deb;
         i = deb;
@@ -275,7 +332,9 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
  */
 
 void affichage(personne * client, int * index, int taille){
-    int i,deb,fin;
+    int i; 
+    int deb; 
+    int fin;
 
     do{
         printf(" ---------------------------------------------------------------------------\n");
@@ -351,11 +410,14 @@ int ajout(char * filename, int * taille){
     FILE * fichier;
     fichier = fopen(filename,"a+");
 
-    int i,n,choix,confirmation=0;
+    int i; 
+    int n; 
+    int choix; 
+    int confirmation=0;
 
     do{
         printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Gestion d'annuaire - Menu d'ajout de client");
+        printf("| %-73s |\n","Ajouter un client");
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Combien de clients voulez vous ajouter ? (maximum 10 personnes) :");
         printf(" ---------------------------------------------------------------------------\n");

@@ -7,18 +7,11 @@ int format_code_postal(char*,int);
 int format_telephone(char*,int);
 int format_mail(char*,int);
 
-int ctrl_extension(char * filename, int longueur){
-    int ext=strrchr(filename,'.csv'), valide=1;
-
-    if(ext==NULL){
-        valide=0;
-    }
-
-    return valide;
-}
-
 int format_fichier(char ** liste, int lignes){
-    int i,j,virgules=0,valide=1;
+    int i;
+    int j;
+    int virgules=0; 
+    int valide=1;
 
     for(i=0;i<lignes-1 && valide==1;i++){
         virgules=0;
@@ -36,7 +29,8 @@ int format_fichier(char ** liste, int lignes){
 }
 
 int ctrl_virgule(char * chaine, int longueur){
-    int i, valide=1;
+    int i; 
+    int valide=1;
 
     for(i=0;i<longueur;i++){
         if(chaine[i]==','){
@@ -48,8 +42,8 @@ int ctrl_virgule(char * chaine, int longueur){
 }
 
 int format_code_postal(char * chaine, int longueur){
-    int i,valide=1;
-
+    int i; 
+    int valide=1;
     int controle_virgule = ctrl_virgule(chaine,longueur);
 
     if(controle_virgule==0){
@@ -72,8 +66,8 @@ int format_code_postal(char * chaine, int longueur){
 }
 
 int format_telephone(char * chaine, int longueur){
-    int i, valide=1;
-
+    int i; 
+    int valide=1;
     int controle_virgule = ctrl_virgule(chaine,longueur);
 
     if(controle_virgule==0){
@@ -103,8 +97,12 @@ int format_telephone(char * chaine, int longueur){
 }
 
 int format_mail(char * chaine, int longueur){
-    int i, valide=0,arobase_ind_0=0,arobase=0,point=0,resultat;
-
+    int i; 
+    int valide=0; 
+    int arobase_ind_0=0; 
+    int arobase=0; 
+    int point=0; 
+    int resultat;
     int controle_virgule = ctrl_virgule(chaine,longueur);
 
     if(controle_virgule==0){
