@@ -8,7 +8,6 @@
 
 #include "main.h"
 #include "fonction.c"
-#include "format.c"
 
     
 /**
@@ -160,38 +159,38 @@ int main(){
                             mode2=0;
                             break;
                         case 1:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
                             affichage(client,tableau_indices,nombre_lignes);
                             mode2=0;
                             break;
                         case 2:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         case 3:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         case 4:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         case 5:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         case 6:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         case 7:
-                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                            affichage(client,tableau_indices,nombre_lignes);
+                            tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,mode2);
+                            affichage(client,tableau_indices,nombre_lignes-1);
                             mode2=0;
                             break;
                         default:
