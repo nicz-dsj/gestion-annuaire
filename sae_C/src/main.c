@@ -77,6 +77,11 @@ int main(){
                     printf("| %-73s |\n","Fermeture");
                     printf(" ---------------------------------------------------------------------------\n");
 
+                    for(i=0;i<nombre_fichiers;i++){
+                        free(tableau_fichiers[i]);
+                    }
+                    free(tableau_fichiers);
+
                     return 0;
                     break;
                 case 1:
@@ -182,6 +187,19 @@ int main(){
                         printf(" ---------------------------------------------------------------------------\n");
                         printf("| %-73s |\n","Fichier cree");
                         printf(" ---------------------------------------------------------------------------\n\n");
+
+                        for(i=0;i<nombre_fichiers;i++){
+                            free(tableau_fichiers[i]);
+                        }
+                        free(tableau_fichiers);
+
+                        nombre_fichiers = nombre_fichiers+1;
+
+                        tableau_fichiers = malloc(nombre_lignes*sizeof(char*));
+                        for(i=0;i<nombre_fichiers;i++){
+                            tableau_fichiers[i] = malloc(taille_ligne*sizeof(char));
+                        }
+                        lecture_repertoire(tableau_fichiers);
                     }
                     break;
                 case 3:
@@ -261,6 +279,19 @@ int main(){
                                         printf(" ---------------------------------------------------------------------------\n");
                                         printf("| %-73s |\n","Fichier supprime");
                                         printf(" ---------------------------------------------------------------------------\n\n");
+                                        
+                                        for(i=0;i<nombre_fichiers;i++){
+                                            free(tableau_fichiers[i]);
+                                        }
+                                        free(tableau_fichiers);
+
+                                        nombre_fichiers = nombre_fichiers-1;
+
+                                        tableau_fichiers = malloc(nombre_lignes*sizeof(char*));
+                                        for(i=0;i<nombre_fichiers;i++){
+                                            tableau_fichiers[i] = malloc(taille_ligne*sizeof(char));
+                                        }
+                                        lecture_repertoire(tableau_fichiers);
                                     }
                                     else{
                                         printf(" ---------------------------------------------------------------------------\n");
