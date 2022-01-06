@@ -27,7 +27,7 @@ int format_fichier(char ** liste, int lignes, int taille){
                 virgules=virgules+1;
             }
         }
-        printf("virgules %d",virgules);
+
         if(virgules!=6){
             valide=0;
         }
