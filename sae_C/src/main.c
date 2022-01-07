@@ -20,6 +20,8 @@
 int main(){
     int validite_fichier=0, ouverture, mode, mode2=0, nombre_lignes = 0, *tableau_indices, nouv_client;
     char nom_fichier[taille_nom_fichier];
+    int ind;
+    char mot[] = "Adelaide";
 
     while(1){ // boucle premettant de boucler le programme
         do{
@@ -81,6 +83,7 @@ int main(){
             printf("| %-20d | %-50s |\n",2,"Afficher les clients");
             printf("| %-20d | %-50s |\n",3,"Rechercher un client");
             printf("| %-20d | %-50s |\n",4,"Ajouter un client");
+            printf("| %-20d | %-50s |\n",5,"Cherhcer un client");
             printf(" ---------------------------------------------------------------------------\n");
             scanf("%d",&mode);
 
@@ -113,50 +116,44 @@ int main(){
                 printf(" ---------------------------------------------------------------------------\n");
                 scanf("%d",&mode2);
                 switch (mode2){
-                case 0:
-                    mode2=0;
-                    break;
-                case 1:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                    case 0:
+                        mode2=0;
+                        break;
+                    case 1:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 2:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 3:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 4:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 5:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 6:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    case 7:
+                        tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                        mode2=0;
+                        break;
+                    default:
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+                        break;
+                    }
                     affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 2:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 3:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 4:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 5:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 6:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                case 7:
-                    tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
-                    affichage(client,tableau_indices,nombre_lignes);
-                    mode2=0;
-                    break;
-                default:
-                    printf(" ---------------------------------------------------------------------------\n");
-                    printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
-                    printf(" ---------------------------------------------------------------------------\n\n");
-                    break;
-                }
             }while(mode2 != 0);
                 break;
             case 3:
@@ -174,6 +171,47 @@ int main(){
                     remplissage(tableau_indices,nombre_lignes);
                 }
                 break;
+            case 5:
+                printf("avec quel parametre voulez vous chercher\n");
+                scanf("%d",&mode2);
+                tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-1,mode2);
+                printf("\nle nom a chercher est %s",mot);
+                ind = recherche_dichotomique(mot,client,tableau_indices,nombre_lignes,mode2);
+                if (ind>=0)
+                {
+                printf("recherche effectué");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Prenom",client[tableau_indices[ind]].prenom);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Nom",client[tableau_indices[ind]].nom);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Ville",client[tableau_indices[ind]].ville);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Code Postal",client[tableau_indices[ind]].code_postal);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Telephone",client[tableau_indices[ind]].telephone);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Mail",client[tableau_indices[ind]].mail);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("|                      |                                                    |\n");
+                printf("| %-20s | %-50s |\n","Profession",client[tableau_indices[ind]].profession);
+                printf("|                      |                                                    |\n");
+                printf(" ---------------------------------------------------------------------------\n\n"); 
+                }
+                    break;
             default:
                 printf(" ---------------------------------------------------------------------------\n");
                 printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");

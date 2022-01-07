@@ -22,6 +22,7 @@ void permuter(int*,int*);
 void tri_rapide_indirect(personne*,int*,int,int,int);
 void afficher(personne*,int*,int);
 int ajout(char*,int*);
+int recherche_dichotomique(char *,personne *, int *, int,int);
 
 /**
  * @fn int validite(char* filename)
@@ -524,4 +525,150 @@ int ajout(char * filename, int * taille){
     fclose(fichier);
 
     return n;
+}
+
+
+int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int taille, int mode){
+    int ind =-1, pos, trouve = 0, debut = 0, fin = taille-1;
+    switch (mode)
+    {
+    case 1:
+        while (trouve == 0 && debut < fin)
+        {
+            pos = (debut + fin)/2;
+            if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
+                    printf("plus grand");
+                    debut = pos;
+                }
+                else{
+                    printf("plus petit");
+                    fin = pos;
+                }
+            }
+        }
+        break;
+    case 2:
+        while (trouve == 0 && debut < fin)
+        {
+            pos = (debut + fin)/2;
+            if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
+                    debut = pos;
+                }
+                else{
+                    fin = pos;
+                }
+            }
+        }
+        break;
+    case 3:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
+            {
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].ville) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
+        }
+        break;
+    case 4:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
+            {
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].code_postal) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
+        }
+        break;
+    case 5:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
+            {
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].telephone) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
+        }
+        break;
+    case 6:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
+            {
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].mail) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
+        }
+        break;
+    case 7:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+            if (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
+            {
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if (strcmp(valeur_recherche, client[index[pos]].profession) > 0)
+                {
+                    debut = pos;
+                }
+                else
+                    fin = pos;
+            }
+        }
+        break;
+    
+    default:
+        break;
+    }
+    
+    return ind;
 }
