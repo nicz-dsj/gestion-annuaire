@@ -20,8 +20,8 @@
 int main(){
     int validite_fichier=0, ouverture, mode, mode2=0, nombre_lignes = 0, *tableau_indices, nouv_client;
     char nom_fichier[taille_nom_fichier];
-    int ind;
-    char mot[] = "Adelaide";
+    int ind,deb,fin;
+    char mot[] = "Benoit";
 
     while(1){ // boucle premettant de boucler le programme
         do{
@@ -153,7 +153,32 @@ int main(){
                         printf(" ---------------------------------------------------------------------------\n\n");
                         break;
                     }
-                    affichage(client,tableau_indices,nombre_lignes);
+                    do{
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Ligne de debut (0 si vous voulez afficher du debut) :");
+                        printf(" ---------------------------------------------------------------------------\n");
+                        scanf("%d",&deb);
+
+                        if(deb<0 || deb>nombre_lignes){
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
+                    }while(deb<0 || deb>nombre_lignes);
+
+                    do{
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Ligne de fin (0 si vous voulez afficher jusqu'a la fin) :");
+                        printf(" ---------------------------------------------------------------------------\n");
+                        scanf("%d",&fin);
+
+                        if(fin<0 || fin>nombre_lignes){
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
+                    }while(fin<0 || fin>nombre_lignes);
+                    affichage(client,tableau_indices,nombre_lignes,deb,fin);
             }while(mode2 != 0);
                 break;
             case 3:
@@ -179,37 +204,16 @@ int main(){
                 ind = recherche_dichotomique(mot,client,tableau_indices,nombre_lignes,mode2);
                 if (ind>=0)
                 {
-                printf("recherche effectué");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Prenom",client[tableau_indices[ind]].prenom);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Nom",client[tableau_indices[ind]].nom);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Ville",client[tableau_indices[ind]].ville);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Code Postal",client[tableau_indices[ind]].code_postal);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Telephone",client[tableau_indices[ind]].telephone);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Mail",client[tableau_indices[ind]].mail);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n");
-                printf("|                      |                                                    |\n");
-                printf("| %-20s | %-50s |\n","Profession",client[tableau_indices[ind]].profession);
-                printf("|                      |                                                    |\n");
-                printf(" ---------------------------------------------------------------------------\n\n"); 
+                    printf("recherche effectué\n");
+                    affichage(client,tableau_indices,nombre_lignes,ind,ind);
+                    printf("\n%d\n",ind);
+                    deb=encadrement_inf(mot,client,tableau_indices,ind,mode2);
+                    fin=encadrement_sup(mot,client,tableau_indices,nombre_lignes,ind,mode2);
+                    printf("%d", deb);
+                    affichage(client,tableau_indices,nombre_lignes,deb,fin);
+                }
+                else{
+                    printf("le mot recherche n'est pas dans le tableau");
                 }
                     break;
             default:

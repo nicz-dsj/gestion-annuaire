@@ -23,6 +23,8 @@ void tri_rapide_indirect(personne*,int*,int,int,int);
 void afficher(personne*,int*,int);
 int ajout(char*,int*);
 int recherche_dichotomique(char *,personne *, int *, int,int);
+int encadrement_sup(char *, personne *, int *, int, int,int);
+int encadrement_inf(char *, personne *, int *, int, int);
 
 /**
  * @fn int validite(char* filename)
@@ -252,34 +254,8 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
  * @param taille
  */
 
-void affichage(personne * client, int * index, int taille){
-    int i,deb,fin;
-
-    do{
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Ligne de debut (0 si vous voulez afficher du debut) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%d",&deb);
-
-        if(deb<0 || deb>taille){
-            printf(" ---------------------------------------------------------------------------\n");
-            printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
-            printf(" ---------------------------------------------------------------------------\n\n");
-        }
-    }while(deb<0 || deb>taille);
-
-    do{
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Ligne de fin (0 si vous voulez afficher jusqu'a la fin) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%d",&fin);
-
-        if(fin<0 || fin>taille){
-            printf(" ---------------------------------------------------------------------------\n");
-            printf("| %-73s |\n","/!\\ Veuillez saisir un champ valide !");
-            printf(" ---------------------------------------------------------------------------\n\n");
-        }
-    }while(fin<0 || fin>taille);
+void affichage(personne * client, int * index, int taille,int deb,int fin){
+    int i;
 
     if(fin==0){
         fin = taille;
@@ -298,7 +274,7 @@ void affichage(personne * client, int * index, int taille){
         printf(" ---------------------------------------------------------------------------\n");
         printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Prenom",client[index[i]].prenom);
-        printf("|                      |                                                    |\n");
+           printf("|                      |                                                    |\n");
         printf(" ---------------------------------------------------------------------------\n");
         printf("|                      |                                                    |\n");
         printf("| %-20s | %-50s |\n","Nom",client[index[i]].nom);
@@ -533,39 +509,43 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
     switch (mode)
     {
     case 1:
-        while (trouve == 0 && debut < fin)
+        while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
+
             if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
                 if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
-                    printf("plus grand");
-                    debut = pos;
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
                 else{
-                    printf("plus petit");
-                    fin = pos;
+                    printf("\nplus petit");
+                    fin = pos -1;
                 }
             }
         }
         break;
     case 2:
-        while (trouve == 0 && debut < fin)
+        while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
+
             if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
                 if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
-                    debut = pos;
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
                 else{
-                    fin = pos;
+                    printf("\nplus petit");
+                    fin = pos -1;
                 }
             }
         }
@@ -574,18 +554,20 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
-            {
+
+            if(strcmp(valeur_recherche, client[index[pos]].ville) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].ville) > 0)
-                {
-                    debut = pos;
+                if(strcmp(valeur_recherche, client[index[pos]].ville) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
-                else
-                    fin = pos;
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
             }
         }
         break;
@@ -593,18 +575,20 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
-            {
+
+            if(strcmp(valeur_recherche, client[index[pos]].code_postal) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].code_postal) > 0)
-                {
-                    debut = pos;
+                if(strcmp(valeur_recherche, client[index[pos]].code_postal) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
-                else
-                    fin = pos;
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
             }
         }
         break;
@@ -612,18 +596,20 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
-            {
+
+            if(strcmp(valeur_recherche, client[index[pos]].telephone) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].telephone) > 0)
-                {
-                    debut = pos;
+                if(strcmp(valeur_recherche, client[index[pos]].telephone) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
-                else
-                    fin = pos;
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
             }
         }
         break;
@@ -631,18 +617,20 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
-            {
+
+            if(strcmp(valeur_recherche, client[index[pos]].mail) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].mail) > 0)
-                {
-                    debut = pos;
+                if(strcmp(valeur_recherche, client[index[pos]].mail) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
-                else
-                    fin = pos;
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
             }
         }
         break;
@@ -650,18 +638,20 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
         while (trouve == 0 && debut <= fin)
         {
             pos = (debut + fin)/2;
-            if (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
-            {
+
+            if(strcmp(valeur_recherche, client[index[pos]].profession) == 0){
                 ind = pos;
                 trouve =1;
             }
             else{
-                if (strcmp(valeur_recherche, client[index[pos]].profession) > 0)
-                {
-                    debut = pos;
+                if(strcmp(valeur_recherche, client[index[pos]].profession) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
                 }
-                else
-                    fin = pos;
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
             }
         }
         break;
@@ -671,4 +661,114 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
     }
     
     return ind;
+}
+
+int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos]].nom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
+        {
+            pos++;
+        }
+        break;
+    
+    default:
+        break;
+    }
+    return pos;
+}
+
+int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
+        {   
+            printf("\n%d",pos);
+            printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
+            printf("%d", pos-1);
+            pos--;
+            printf("\n%d",pos);
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos-2]].ville) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos-2]].code_postal) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos-2]].telephone) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos-2]].mail) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos-2]].profession) == 0)
+        {
+            pos--;
+        }
+        break;
+    
+    default:
+        break;
+    }
+    return pos;
 }
