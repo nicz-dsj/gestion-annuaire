@@ -1,11 +1,24 @@
 #include "main.h"
 
-int ctrl_extension(char*,int);
+int ctrl_extension(char*);
 int format_fichier(char**,int);
 int ctrl_virgule(char*,int);
 int format_code_postal(char*,int);
 int format_telephone(char*,int);
 int format_mail(char*,int);
+
+int ctrl_extension(char * filename){
+    int valide = 0;
+    char * extension = strrchr(filename,'.');
+
+    if(strcmp(extension,".csv") == 0){
+        valide = 1;
+    }
+    if(strcmp(extension,".txt") == 0 ){
+        valide = 1;
+    }
+    return valide;
+}
 
 int format_fichier(char ** liste, int lignes){
     int i;
