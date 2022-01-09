@@ -45,7 +45,7 @@ int main(){
 
     personne * client = NULL;
 
-    chargement();
+     
 
     while(1){ // boucle premettant de boucler le programme
         nombre_fichiers = fichiers();
@@ -506,7 +506,7 @@ int main(){
             tableau_indices = malloc(nombre_lignes*sizeof(int));
             remplissage(tableau_indices,nombre_lignes);
 
-            chargement();
+             
 
             do{
                 system("cls");
@@ -528,7 +528,7 @@ int main(){
 
                     free(tableau_indices);
 
-                    chargement();
+                     
 
                     validite_fichier = 0;
                     break;
