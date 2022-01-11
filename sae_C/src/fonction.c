@@ -23,6 +23,11 @@ void permuter(int*,int*);
 void tri_rapide_indirect(personne*,int*,int,int,int);
 void afficher(personne*,int*,int);
 int ajout(char*,int*);
+int recherche_dichotomique(char *,personne *, int *, int,int,int);
+int encadrement_sup(char *, personne *, int *, int, int,int);
+int encadrement_inf(char *, personne *, int *, int, int);
+void filtre (personne *, int *, int,int);
+
 
 /**
  * @fn int validite(char* filename)
@@ -84,13 +89,11 @@ void lecture_repertoire(char ** liste){
 }
 
 int menu_selection(char ** liste, char * fichier, int lignes){
-    blanc();
 
     int i;
     int choix_fichier;
     int confirm;
 
-    cyan();
     printf(" ---------------------------------------------------------------------------\n");
     printf("| %-73s |\n","Selectionnez un fichier");
     printf(" ---------------------------------------------------------------------------\n");
@@ -106,15 +109,12 @@ int menu_selection(char ** liste, char * fichier, int lignes){
             printf(" ---------------------------------------------------------------------------\n");
         }
     }
-    blanc();
     scanf("%d",&choix_fichier);
 
     if(choix_fichier<0 || choix_fichier>lignes){
-        rouge();
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","/!\\ Champ invalide");
         printf(" ---------------------------------------------------------------------------\n\n");
-        blanc();
 
         getch();
 
@@ -472,11 +472,9 @@ int ajout(char * filename, int * taille){
         scanf("%d",&n);
 
         if(n<0){
-            rouge();
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","/!\\ Champ invalide !");
             printf(" ---------------------------------------------------------------------------\n\n");
-            blanc();
 
             getch();
         }
@@ -484,11 +482,9 @@ int ajout(char * filename, int * taille){
 
     system("cls");
 
-    jaune();
     printf(" ---------------------------------------------------------------------------\n");
     printf("| %-73s |\n","(i) Lors de votre saisie veuillez ne pas mettre de virgule");
     printf(" ---------------------------------------------------------------------------\n\n");
-    blanc();
 
     getch();
 
@@ -508,11 +504,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.prenom,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -534,11 +528,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.nom,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -560,11 +552,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.ville,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -683,11 +673,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.profession,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -860,3 +848,360 @@ void suppression(personne * client, char * filename, int indice, int * taille){
         *taille = *taille-1;
     }
 }
+
+
+int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
+    int ind =-1, pos, trouve = 0;
+    switch (mode)
+    {
+    case 1:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 2:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 3:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].ville) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].ville) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 4:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].code_postal) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].code_postal) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 5:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].telephone) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].telephone) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 6:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].mail) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].mail) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 7:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].profession) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].profession) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+    printf("%d ind recherche dicho\n",ind);
+    return ind+1;
+}
+
+int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos]].nom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
+        {
+            pos++;
+        }
+        break;
+
+    default:
+        break;
+    }
+    return pos;
+}
+
+int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
+        {
+            printf("\n%d",pos);
+            printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
+            printf("%d", pos-1);
+            pos--;
+            printf("\n%d",pos);
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos-2]].ville) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos-2]].code_postal) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos-2]].telephone) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos-2]].mail) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos-2]].profession) == 0)
+        {
+            pos--;
+        }
+        break;
+
+    default:
+        break;
+    }
+    return pos;
+}
+
+
+void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
+    char valeur[50];
+    int mode,pos_valeur;
+    do{
+        do{
+        printf("\npar quel parametre voulez vous filtrer l'annuaire?\n");
+        printf("| %-20d | %-50s |\n",0,"Stoper le filtre");
+        printf("| %-20d | %-50s |\n",1,"Filtrer par prenom");
+        printf("| %-20d | %-50s |\n",2,"Filtrer par nom");
+        printf("| %-20d | %-50s |\n",3,"Filtrer par ville");
+        printf("| %-20d | %-50s |\n",4,"Filtrer par code postal");
+        printf("| %-20d | %-50s |\n",5,"Filtrer par telephone");
+        printf("| %-20d | %-50s |\n",6,"Filtrer par mail");
+        printf("| %-20d | %-50s |\n",7,"Filtrer par profession");
+        scanf("%d", &mode);
+        }while(mode < 0 && mode >7);
+        printf(" %d",mode);
+        do{
+            switch (mode)
+            {
+            case 1:
+                printf("\nPar quel prenom voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 2:
+                printf("\nPar quel nom voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 3:
+                printf("\nPar quel ville voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 4:
+                printf("\nPar quel code postale voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 5:
+                printf("\nPar quel telephone voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 6:
+                printf("\nPar quel mail voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+            case 7:
+                printf("\nPar quel profession voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+
+                break;
+
+            default:
+                break;
+            }
+        }while(strlen(valeur)<=0);
+        printf("\n\n %d",strlen(valeur));
+        printf("\nle tri va se faire\n");
+        tri_rapide_indirect(client,tab_ind_filtre,deb,fin-1,mode);
+        printf("trie effectue");
+        printf("\non cherche la pos\n");
+        pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,deb,fin,mode);
+        printf("%d\n", pos_valeur);
+            if (pos_valeur>=0)
+                {
+                    printf("recherche effectué\n");
+                    printf("\n %d\n",pos_valeur);
+                    deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
+                    fin=encadrement_sup(valeur,client,tab_ind_filtre,fin,pos_valeur,mode);
+                    printf("\n %d", deb);
+                    printf("\n %d",fin);
+                    affichage(client,tab_ind_filtre,deb,fin,fin-deb,1);
+                    deb--;
+                }
+                else{
+                    printf("le mot recherche n'est pas dans le tableau");
+                }
+
+    }while(mode != 0);
+}
+

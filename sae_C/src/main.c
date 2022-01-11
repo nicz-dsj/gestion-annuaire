@@ -478,6 +478,7 @@ int main(){
                 printf("| %-20d | %-50s |\n",4,"Ajouter un client");
                 printf("| %-20d | %-50s |\n",5,"Modifier un client");
                 printf("| %-20d | %-50s |\n",6,"Supprimer un client");
+                printf("| %-20d | %-50s |\n",7,"filtrer les clients");
                 printf(" ---------------------------------------------------------------------------\n");
                 scanf("%d",&menu_gestion);
 
@@ -610,6 +611,9 @@ int main(){
                     break;
                 case 6:
                     suppression(client,nom_fichier,5000,&nombre_lignes);
+                    break;
+                case 7:
+                    filtre(client,tableau_indices,0,nombre_lignes);
                     break;
                 default:
                     printf(" ---------------------------------------------------------------------------\n");
