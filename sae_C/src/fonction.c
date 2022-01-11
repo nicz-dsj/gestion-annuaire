@@ -1235,10 +1235,9 @@ void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
                     printf("\n %d", deb);
                     printf("\n %d",fin);
                     affichage(client,tab_ind_filtre,deb,fin,fin-deb,1);
-                    deb--;
                 }
                 else{
-                    printf("le mot recherche n'est pas dans le tableau");
+                    printf("Aucun client ne répond à ce critère");
                 }
 
     }while(mode != 0);
