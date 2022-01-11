@@ -26,7 +26,7 @@ int ajout(char*,int*);
 int recherche_dichotomique(char *,personne *, int *, int,int,int);
 int encadrement_sup(char *, personne *, int *, int, int,int);
 int encadrement_inf(char *, personne *, int *, int, int);
-void filtre (personne *, int *, int,int);
+void filtre (personne *, int *, int*,int*);
 
 
 /**
@@ -1120,10 +1120,10 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
 }
 
 
-void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
+void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
     char valeur[50];
     int mode,pos_valeur;
-    do{
+    while(mode != 0){
         do{
         printf("\npar quel parametre voulez vous filtrer l'annuaire?\n");
         printf("| %-20d | %-50s |\n",0,"Stoper le filtre");
@@ -1137,7 +1137,9 @@ void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
         scanf("%d", &mode);
         }while(mode < 0 && mode >7);
         printf(" %d",mode);
-        do{
+        if (mode>0)
+        {
+          do{
             switch (mode)
             {
             case 1:
@@ -1179,28 +1181,28 @@ void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
             default:
                 break;
             }
-        }while(strlen(valeur)<=0);
-        printf("\n\n %d",strlen(valeur));
-        printf("\nle tri va se faire\n");
-        tri_rapide_indirect(client,tab_ind_filtre,deb,fin-1,mode);
-        printf("trie effectue");
-        printf("\non cherche la pos\n");
-        pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,deb,fin,mode);
-        printf("%d\n", pos_valeur);
-            if (pos_valeur>=0)
-                {
-                    printf("recherche effectué\n");
-                    printf("\n %d\n",pos_valeur);
-                    deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
-                    fin=encadrement_sup(valeur,client,tab_ind_filtre,fin,pos_valeur,mode);
-                    printf("\n %d", deb);
-                    printf("\n %d",fin);
-                    affichage(client,tab_ind_filtre,deb,fin,fin-deb,1);
-                }
-                else{
-                    printf("Aucun client ne répond à ce critère");
-                }
-
-    }while(mode != 0);
+            }while(strlen(valeur)<=0);
+            printf("\n\n %d",strlen(valeur));
+            printf("\nle tri va se faire\n");
+            tri_rapide_indirect(client,tab_ind_filtre,*deb,*fin-1,mode);
+            printf("trie effectue");
+            printf("\non cherche la pos\n");
+            pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,*deb,*fin,mode);
+            printf("%d\n", pos_valeur);
+            if (pos_valeur>0)
+            {
+                printf("recherche effectué\n");
+                printf("\n %d\n",pos_valeur);
+                *deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
+                *fin=encadrement_sup(valeur,client,tab_ind_filtre,*fin,pos_valeur,mode);
+                printf("\n %d", deb);
+                printf("\n %d",fin);
+                affichage(client,tab_ind_filtre,*deb,*fin,(*fin)-(*deb),1);
+            }
+            else{
+                printf("Aucun client ne répond à ce critère");
+            }
+        }   
+    }
 }
 

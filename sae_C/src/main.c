@@ -39,6 +39,9 @@ int main(){
     int fin_ligne;
     int position_personne_annuaire;
     int nouv_client;
+    int ind_deb_filtre;
+    int ind_fin_filtre;
+    int mode_filtre;
 
     char nom_fichier[taille_nom_fichier];
     char ** tableau_fichiers = NULL;
@@ -466,7 +469,7 @@ int main(){
 
 
             do{
-                system("cls");
+                
 
                 printf(" ---------------------------------------------------------------------------\n");
                 printf("| %-73s |\n","Gestion du fichier");
@@ -613,7 +616,10 @@ int main(){
                     suppression(client,nom_fichier,5000,&nombre_lignes);
                     break;
                 case 7:
-                    filtre(client,tableau_indices,0,nombre_lignes);
+                    ind_deb_filtre = 0;
+                    ind_fin_filtre = nombre_lignes;
+                    filtre(client,tableau_indices,&ind_deb_filtre,&ind_fin_filtre);
+                    printf("\nvaleurs ind filtre %d\n %d\n %d", ind_deb_filtre, ind_fin_filtre);
                     break;
                 default:
                     printf(" ---------------------------------------------------------------------------\n");
