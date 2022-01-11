@@ -89,13 +89,11 @@ void lecture_repertoire(char ** liste){
 }
 
 int menu_selection(char ** liste, char * fichier, int lignes){
-    blanc();
 
     int i;
     int choix_fichier;
     int confirm;
 
-    cyan();
     printf(" ---------------------------------------------------------------------------\n");
     printf("| %-73s |\n","Selectionnez un fichier");
     printf(" ---------------------------------------------------------------------------\n");
@@ -111,15 +109,12 @@ int menu_selection(char ** liste, char * fichier, int lignes){
             printf(" ---------------------------------------------------------------------------\n");
         }
     }
-    blanc();
     scanf("%d",&choix_fichier);
 
     if(choix_fichier<0 || choix_fichier>lignes){
-        rouge();
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","/!\\ Champ invalide");
         printf(" ---------------------------------------------------------------------------\n\n");
-        blanc();
 
         getch();
 
@@ -477,11 +472,9 @@ int ajout(char * filename, int * taille){
         scanf("%d",&n);
 
         if(n<0){
-            rouge();
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","/!\\ Champ invalide !");
             printf(" ---------------------------------------------------------------------------\n\n");
-            blanc();
 
             getch();
         }
@@ -489,11 +482,9 @@ int ajout(char * filename, int * taille){
 
     system("cls");
 
-    jaune();
     printf(" ---------------------------------------------------------------------------\n");
     printf("| %-73s |\n","(i) Lors de votre saisie veuillez ne pas mettre de virgule");
     printf(" ---------------------------------------------------------------------------\n\n");
-    blanc();
 
     getch();
 
@@ -513,11 +504,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.prenom,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -539,11 +528,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.nom,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -565,11 +552,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.ville,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -592,20 +577,16 @@ int ajout(char * filename, int * taille){
 
             if(strcmp(client.code_postal,"\0") != 0){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez respecter le format \"000000\"");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
                 else if(confirmation==-1){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -628,20 +609,16 @@ int ajout(char * filename, int * taille){
 
             if(strcmp(client.telephone,"\0")!=0){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez respecter le format \"00.00.00.00.00\"");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
                 else if(confirmation==-1){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -665,20 +642,16 @@ int ajout(char * filename, int * taille){
 
             if(strcmp(client.mail,"\0")!=0){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez respecter le format \"texte@texte.domaine\"");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
                 else if(confirmation==-1){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -700,11 +673,9 @@ int ajout(char * filename, int * taille){
 
             if (strcmp(client.profession,"\0") !=0 ){
                 if(confirmation==0){
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
-                    blanc();
 
                     getch();
                 }
@@ -716,7 +687,6 @@ int ajout(char * filename, int * taille){
 
         system("cls");
 
-        jaune();
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Nouveau client");
         printf(" ---------------------------------------------------------------------------\n");
@@ -769,17 +739,14 @@ int ajout(char * filename, int * taille){
             printf("| %-20s |                                                    |\n","Profession");
         }
         printf(" ---------------------------------------------------------------------------\n\n");
-        blanc();
 
         do{
-            jaune();
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Confirmer l'ajout de ce nouveau client ? :");
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-20s | %-50s |\n","y","Oui");
             printf("| %-20s | %-50s |\n","n","Non");
             printf(" ---------------------------------------------------------------------------\n");
-            blanc();
 
             scanf(" %c",&choix);
 
@@ -822,29 +789,23 @@ int ajout(char * filename, int * taille){
 
                     *taille = *taille + 1;
 
-                    vert();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","Client ajoute");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    blanc();
 
                     getch();
                     break;
                 case 'n':
-                    vert();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","Annulation du processus");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    blanc();
 
                     getch();
                     break;
                 default:
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Champ invalide !");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    blanc();
 
                     getch();
                     break;
@@ -1040,7 +1001,7 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
             }
         }
         break;
-    
+
     default:
         break;
     }
@@ -1094,7 +1055,7 @@ int encadrement_sup(char * valeur_recherche, personne * client, int * index, int
             pos++;
         }
         break;
-    
+
     default:
         break;
     }
@@ -1113,7 +1074,7 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
         break;
     case 2:
         while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
-        {   
+        {
             printf("\n%d",pos);
             printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
             printf("%d", pos-1);
@@ -1151,7 +1112,7 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
             pos--;
         }
         break;
-    
+
     default:
         break;
     }
@@ -1182,39 +1143,39 @@ void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
             case 1:
                 printf("\nPar quel prenom voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 2:
                 printf("\nPar quel nom voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 3:
                 printf("\nPar quel ville voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 4:
                 printf("\nPar quel code postale voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 5:
                 printf("\nPar quel telephone voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 6:
                 printf("\nPar quel mail voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
             case 7:
                 printf("\nPar quel profession voulez vous filtrer l'annuaire?");
                 scanf(" %s", &valeur);
-                
+
                 break;
-            
+
             default:
                 break;
             }

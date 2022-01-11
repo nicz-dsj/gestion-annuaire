@@ -106,13 +106,11 @@ int main(){
                             case 1:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) Le fichier doit etre de format :");
                                 printf("| %-73s |\n","prenom,nom,ville,code_postal,telephone,mail,profession)");
                                 printf("| %-73s |\n","et doit etre d'extension .csv ou .txt");
                                 printf(" ---------------------------------------------------------------------------\n");
-                                blanc();
 
                                 getch();
 
@@ -128,13 +126,11 @@ int main(){
                             case 2:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) Le fichier doit etre de format :");
                                 printf("| %-73s |\n","prenom,nom,ville,code_postal,telephone,mail,profession)");
                                 printf("| %-73s |\n","et doit etre de type TXT ou CSV");
                                 printf(" ---------------------------------------------------------------------------\n");
-                                blanc();
 
                                 getch();
 
@@ -143,11 +139,9 @@ int main(){
                                 confim_choix_fichier = menu_selection(tableau_fichiers,nom_fichier,nombre_fichiers);
                                 break;
                             default:
-                                rouge();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","/!\\ Champ invalide !");
                                 printf(" ---------------------------------------------------------------------------\n\n");
-                                blanc();
                                 break;
                             }
 
@@ -156,11 +150,9 @@ int main(){
                                 validite_fichier=0;
                                 if(validite(nom_fichier) == 1){ // teste l'existence du fichier grace a la fonction validite()
                                     if(ctrl_extension(nom_fichier)==0){
-                                        rouge();
                                         printf(" ---------------------------------------------------------------------------\n");
                                         printf("| %-73s |\n","/!\\ Ce fichier n'est pas un fichier CSV ou TXT");
                                         printf(" ---------------------------------------------------------------------------\n\n");
-                                        blanc();
 
                                         getch();
                                     }
@@ -169,11 +161,9 @@ int main(){
                                     }
                                 }
                                 else{
-                                    rouge();
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","/!\\ Ce fichier n'existe pas");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -202,11 +192,9 @@ int main(){
                             case 1:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) Le nom du fichier ne doit pas etre existant");
                                 printf(" ---------------------------------------------------------------------------\n\n");
-                                blanc();
 
                                 getch();
 
@@ -224,11 +212,9 @@ int main(){
                             case 2:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) Le nom du fichier ne doit pas etre existant");
                                 printf(" ---------------------------------------------------------------------------\n\n");
-                                blanc();
 
                                 getch();
 
@@ -244,11 +230,9 @@ int main(){
                                 strcat(nom_fichier,".csv");
                                 break;
                             default:
-                                rouge();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","/!\\ Champ invalide");
                                 printf(" ---------------------------------------------------------------------------\n\n");
-                                blanc();
 
                                 getch();
                                 break;
@@ -265,11 +249,9 @@ int main(){
                                 }
 
                                 if(existence_nom_fichier==1){
-                                    rouge();
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","/!\\ Ce nom de fichier existe deja");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -286,11 +268,9 @@ int main(){
                                     }
                                     lecture_repertoire(tableau_fichiers);
 
-                                    vert();
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","Fichier cree");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -321,11 +301,9 @@ int main(){
                             case 1:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) L'option supprimer ne peut supprimer que des fichiers TXT ou CSV");
                                 printf(" ---------------------------------------------------------------------------\n");
-                                blanc();
 
                                 getch();
 
@@ -341,11 +319,9 @@ int main(){
                             case 2:
                                 system("cls");
 
-                                jaune();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","(i) L'option supprimer ne peut supprimer que des fichiers TXT ou CSV");
                                 printf(" ---------------------------------------------------------------------------\n");
-                                blanc();
 
                                 getch();
 
@@ -354,11 +330,9 @@ int main(){
                                 confim_choix_fichier = menu_selection(tableau_fichiers,nom_fichier,nombre_fichiers);
                                 break;
                             default:
-                                rouge();
                                 printf(" ---------------------------------------------------------------------------\n");
                                 printf("| %-73s |\n","/!\\ Champ invalide");
                                 printf(" ---------------------------------------------------------------------------\n\n");
-                                blanc();
                                 break;
                             }
 
@@ -366,24 +340,20 @@ int main(){
                             if(menu_supprimer!=0 && confim_choix_fichier==1){
                                 if(validite(nom_fichier) == 1){
                                     if(ctrl_extension(nom_fichier)==0){
-                                        rouge();
                                         printf(" ---------------------------------------------------------------------------\n");
                                         printf("| %-73s |\n","/!\\ Ce fichier n'est pas un fichier TXT ou CSV");
                                         printf(" ---------------------------------------------------------------------------\n\n");
-                                        blanc();
 
                                         getch();
                                     }
                                     else{
                                         do{
-                                            jaune();
                                             printf(" ---------------------------------------------------------------------------\n");
                                             printf("| %-73s |\n","Confirmer la suppression du fichier ?");
                                             printf(" ---------------------------------------------------------------------------\n");
                                             printf("| %-20c | %-50s |\n",'y',"Oui");
                                             printf("| %-20c | %-50s |\n",'n',"Non");
                                             printf(" ---------------------------------------------------------------------------\n\n");
-                                            blanc();
                                             scanf(" %c",&choix);
 
                                             switch(choix){
@@ -400,50 +370,41 @@ int main(){
                                                         }
                                                         lecture_repertoire(tableau_fichiers);
 
-                                                        vert();
                                                         printf(" ---------------------------------------------------------------------------\n");
                                                         printf("| %-73s |\n","Fichier supprime");
                                                         printf(" ---------------------------------------------------------------------------\n\n");
-                                                        blanc();
 
                                                         getch();
                                                     }
                                                     else{
-                                                        rouge();
                                                         printf(" ---------------------------------------------------------------------------\n");
                                                         printf("| %-73s |\n","/!\\ Erreur lors de la suppression du fichier");
                                                         printf(" ---------------------------------------------------------------------------\n\n");
-                                                        blanc();
 
                                                         getch();
                                                     }
                                                     break;
                                                 case 'n':
-                                                    vert();
                                                     printf(" ---------------------------------------------------------------------------\n");
                                                     printf("| %-73s |\n","Annulation du processus");
                                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                                    blanc();
 
                                                     getch();
                                                     break;
                                                 default:
-                                                    rouge();
                                                     printf(" ---------------------------------------------------------------------------\n");
                                                     printf("| %-73s |\n","/!\\ Champ invalide !");
                                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                                    blanc();
                                             }
                                         }while(choix!='y' && choix!='n');
                                     }
                                     menu_supprimer=0;
                                 }
                                 else{
-                                    rouge();
+
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","/!\\ Ce fichier n'existe pas");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -452,11 +413,9 @@ int main(){
                     }while(menu_supprimer!=0);
                     break;
                 default:
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Champ invalide !");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    blanc();
 
                     getch();
                     break;
@@ -478,11 +437,9 @@ int main(){
         format = format_fichier(tableau_lignes,nombre_lignes);
 
         if(format==0){
-            rouge();
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","/!\\ Ce fichier ne correspond pas au format attendu");
             printf(" ---------------------------------------------------------------------------\n\n");
-            blanc();
 
             for(i=0;i<nombre_lignes;i++){
                 free(tableau_lignes[i]);
@@ -589,11 +546,9 @@ int main(){
                             tri_rapide_indirect(client,tableau_indices,0,nombre_lignes-2,menu_afficher);
                             break;
                         default:
-                            rouge();
                             printf(" ---------------------------------------------------------------------------\n");
                             printf("| %-73s |\n","/!\\ Champ invalide !");
                             printf(" ---------------------------------------------------------------------------\n\n");
-                            blanc();
 
                             getch();
                             break;
@@ -608,11 +563,9 @@ int main(){
                                 scanf("%d",&debut_ligne);
 
                                 if(debut_ligne<0 || debut_ligne>nombre_lignes){
-                                    rouge();
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","/!\\ Champ invalide !");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -627,11 +580,9 @@ int main(){
                                 scanf("%d",&fin_ligne);
 
                                 if(fin_ligne<0 || fin_ligne>nombre_lignes){
-                                    rouge();
                                     printf(" ---------------------------------------------------------------------------\n");
                                     printf("| %-73s |\n","/!\\ Champ invalide !");
                                     printf(" ---------------------------------------------------------------------------\n\n");
-                                    blanc();
 
                                     getch();
                                 }
@@ -665,11 +616,9 @@ int main(){
                     filtre(client,tableau_indices,0,nombre_lignes);
                     break;
                 default:
-                    rouge();
                     printf(" ---------------------------------------------------------------------------\n");
                     printf("| %-73s |\n","/!\\ Champ invalide !");
                     printf(" ---------------------------------------------------------------------------\n\n");
-                    blanc();
 
                     getch();
                     break;
