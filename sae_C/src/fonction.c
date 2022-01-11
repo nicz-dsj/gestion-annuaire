@@ -49,7 +49,7 @@ int fichiers(){
                 fichiers++;
                 entite = readdir(dir);
             }
-            
+
         }
 
         closedir(dir);
@@ -204,10 +204,10 @@ void lecture_lignes(char * filename, char ** tableau2d){
 void lecture(char* filename, personne * client){
     FILE * pointeur = NULL;
     pointeur = fopen(filename,"a+");
-    int i=0; 
-    int j=0; 
+    int i=0;
+    int j=0;
     int virgule = 0;
-    
+
     char caractere_lu;
 
     do{
@@ -286,8 +286,8 @@ void permuter(int * a, int * b){
 }
 
 void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int mode){
-    int pivot; 
-    int i; 
+    int pivot;
+    int i;
     int j;
     if(deb < fin){
         pivot = deb;
@@ -358,7 +358,7 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
                 permuter(&index[i],&index[j]);
                 i++;
                 j--;
-            }  
+            }
         }
         permuter(&index[pivot],&index[j]);
         tri_rapide_indirect(client,index,deb,j-1,mode);
@@ -376,84 +376,68 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
  * @param taille
  */
 
-void affichage(personne * client, int * index, int taille){
-    int i; 
-    int deb; 
-    int fin;
+void affichage(personne * client, int * index, int deb, int fin, int taille, int mode){
+    int i;
+    switch (mode){
+        case 1:
+            if(fin==0){
+                fin = taille;
+            }
 
-    do{
-        system("cls");
+            if (deb==0){
+                i=0;
+            }
+            else{
+                i=deb-1;
+            }
 
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Ligne de debut (0 si vous voulez afficher du debut) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%d",&deb);
+            system("cls");
 
-        if(deb<0 || deb>taille){
-            rouge();
-            printf(" ---------------------------------------------------------------------------\n");
-            printf("| %-73s |\n","/!\\ Champ invalide !");
-            printf(" ---------------------------------------------------------------------------\n\n");
-            blanc();
+            while(i<fin){
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| Ligne %-67d |\n",i+1);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Prenom",client[index[i]].prenom);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Nom",client[index[i]].nom);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Ville",client[index[i]].ville);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Code Postal",client[index[i]].code_postal);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Telephone",client[index[i]].telephone);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Mail",client[index[i]].mail);
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","Profession",client[index[i]].profession);
+                printf(" ---------------------------------------------------------------------------\n\n");
+                i++;
+            }
 
             getch();
-        }
-    }while(deb<0 || deb>taille);
-
-    do{
-        system("cls");
-
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Ligne de fin (0 si vous voulez afficher jusqu'a la fin) :");
-        printf(" ---------------------------------------------------------------------------\n");
-        scanf("%d",&fin);
-
-        if(fin<0 || fin>taille){
-            rouge();
+            break;
+        case 2:
             printf(" ---------------------------------------------------------------------------\n");
-            printf("| %-73s |\n","/!\\ Champ invalide !");
+            printf("| %-73s |\n","*");
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Prenom",client[deb].prenom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Nom",client[deb].nom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Ville",client[deb].ville);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Code Postal",client[deb].code_postal);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Telephone",client[deb].telephone);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Mail",client[deb].mail);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Profession",client[deb].profession);
             printf(" ---------------------------------------------------------------------------\n\n");
-            blanc();
 
             getch();
-        }
-    }while(fin<0 || fin>taille);
-
-    if(fin==0){
-        fin = taille;
+            break;
     }
-
-    if (deb==0){
-        i=0;
-    }
-    else{
-        i=deb-1;
-    }
-
-    system("cls");
-
-    while(i<fin){
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| Ligne %-67d |\n",i+1);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Prenom",client[index[i]].prenom);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Nom",client[index[i]].nom);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Ville",client[index[i]].ville);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Code Postal",client[index[i]].code_postal);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Telephone",client[index[i]].telephone);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Mail",client[index[i]].mail);
-        printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-20s | %-50s |\n","Profession",client[index[i]].profession);
-        printf(" ---------------------------------------------------------------------------\n\n");
-        i++;
-    }
-
-    getch();
 }
 
 /**
@@ -471,8 +455,8 @@ int ajout(char * filename, int * taille){
     FILE * fichier;
     fichier = fopen(filename,"a+");
 
-    int i; 
-    int n; 
+    int i;
+    int n;
     int confirmation=0;
 
     char choix;
@@ -514,7 +498,7 @@ int ajout(char * filename, int * taille){
 
         do{
             system("cls");
-            
+
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Prenom : (touche espace pour passer) :");
             printf(" ---------------------------------------------------------------------------\n");
@@ -537,7 +521,7 @@ int ajout(char * filename, int * taille){
                 confirmation = 1;
             }
         }while(confirmation!=1);
-        
+
         do{
             system("cls");
 
@@ -644,7 +628,7 @@ int ajout(char * filename, int * taille){
                     printf("| %-73s |\n","/!\\ Veuillez respecter le format \"00.00.00.00.00\"");
                     printf(" ---------------------------------------------------------------------------\n");
                     blanc();
-                    
+
                     getch();
                 }
                 else if(confirmation==-1){
@@ -653,7 +637,7 @@ int ajout(char * filename, int * taille){
                     printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
                     printf(" ---------------------------------------------------------------------------\n");
                     blanc();
-                    
+
                     getch();
                 }
             }
@@ -661,7 +645,7 @@ int ajout(char * filename, int * taille){
                 confirmation=1;
             }
         }while(confirmation!=1);
-        
+
 
         do{
             system("cls");
@@ -722,11 +706,11 @@ int ajout(char * filename, int * taille){
             }
             else{
                 confirmation = 1;
-            }            
+            }
         }while(confirmation!=1);
 
         system("cls");
-        
+
         jaune();
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Nouveau client");
@@ -866,4 +850,35 @@ int ajout(char * filename, int * taille){
     fclose(fichier);
 
     return n;
+}
+
+void modification(personne * client, char * filename, char * modif, int indice, int taille){
+    int i;
+    FILE * fichier;
+    strcpy(client[indice].nom,modif);
+
+    if(remove(filename)==0){
+        fichier = fopen(filename, "a+");
+        for(i=0;i<taille;i++){
+            fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[i].prenom,client[i].nom,client[i].ville,client[i].code_postal,client[i].telephone,client[i].mail,client[i].profession);
+        }
+        fclose(fichier);
+    }
+}
+
+void suppression(personne * client, char * filename, int indice, int * taille){
+    int i;
+    FILE * fichier;
+
+    if(remove(filename)==0){
+        fichier = fopen(filename, "a+");
+        for(i=0;i<*taille-1;i++){
+            if(i != indice){
+                fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[i].prenom,client[i].nom,client[i].ville,client[i].code_postal,client[i].telephone,client[i].mail,client[i].profession);
+            }
+        }
+        fclose(fichier);
+
+        *taille = *taille-1;
+    }
 }

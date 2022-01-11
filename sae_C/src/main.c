@@ -10,42 +10,42 @@
 #include "fonction.c"
 #include "format.c"
 #include "couleur.c"
-    
+
 /**
  * @fn int main()
  * @brief Programme principal
- * 
+ *
  * @return 0 par convention si le progromme s'est bien exécuté
  */
 
 int main(){
     int nombre_fichiers=0;
     int choix_fichier;
-    int confim_choix_fichier; 
-    int existence_nom_fichier; 
-    int i; 
+    int confim_choix_fichier;
+    int existence_nom_fichier;
+    int i;
     int validite_fichier=0;
     int est_protege;
-    int menu_accueil; 
-    int menu_gestion; 
+    int menu_accueil;
+    int menu_gestion;
     int menu_ouvrir=0;
     int menu_creer=0;
     int menu_supprimer=0;
-    int menu_afficher=0; 
-    int nombre_lignes = 0; 
-    int *tableau_indices = NULL; 
-    int format; 
+    int menu_afficher=0;
+    int nombre_lignes = 0;
+    int *tableau_indices = NULL;
+    int format;
+    int debut_ligne;
+    int fin_ligne;
+    int position_personne_annuaire;
     int nouv_client;
 
-    char nom_fichier[taille_nom_fichier]; 
+    char nom_fichier[taille_nom_fichier];
     char ** tableau_fichiers = NULL;
-    char extension[4]; 
     char ** tableau_lignes = NULL;
     char choix;
 
     personne * client = NULL;
-
-     
 
     while(1){ // boucle premettant de boucler le programme
         nombre_fichiers = fichiers();
@@ -89,7 +89,7 @@ int main(){
                 case 1:
                     do{
                         system("cls");
-                        
+
                         printf(" ---------------------------------------------------------------------------\n");
                         printf("| %-73s |\n","Ouvrir un fichier");
                         printf(" ---------------------------------------------------------------------------\n");
@@ -161,7 +161,7 @@ int main(){
                                         printf("| %-73s |\n","/!\\ Ce fichier n'est pas un fichier CSV ou TXT");
                                         printf(" ---------------------------------------------------------------------------\n\n");
                                         blanc();
-                                    
+
                                         getch();
                                     }
                                     else{
@@ -292,13 +292,13 @@ int main(){
                                     printf(" ---------------------------------------------------------------------------\n\n");
                                     blanc();
 
-                                    getch();                                
+                                    getch();
                                 }
                                 menu_creer=0;
                             }
                         }
                     }while(menu_creer != 0);
-                    
+
                     break;
                 case 3:
                     do{
@@ -371,7 +371,7 @@ int main(){
                                         printf("| %-73s |\n","/!\\ Ce fichier n'est pas un fichier TXT ou CSV");
                                         printf(" ---------------------------------------------------------------------------\n\n");
                                         blanc();
-                                    
+
                                         getch();
                                     }
                                     else{
@@ -468,7 +468,7 @@ int main(){
         }
         free(tableau_fichiers);
 
-        nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche 
+        nombre_lignes = lignes(nom_fichier); // calcule le nombre de lignes et l'affiche
 
         tableau_lignes = malloc(nombre_lignes*sizeof(char*));
         for(i=0;i<nombre_lignes;i++){
@@ -506,7 +506,7 @@ int main(){
             tableau_indices = malloc(nombre_lignes*sizeof(int));
             remplissage(tableau_indices,nombre_lignes);
 
-             
+
 
             do{
                 system("cls");
@@ -519,6 +519,8 @@ int main(){
                 printf("| %-20d | %-50s |\n",2,"Afficher les clients");
                 printf("| %-20d | %-50s |\n",3,"Rechercher un client");
                 printf("| %-20d | %-50s |\n",4,"Ajouter un client");
+                printf("| %-20d | %-50s |\n",5,"Modifier un client");
+                printf("| %-20d | %-50s |\n",6,"Supprimer un client");
                 printf(" ---------------------------------------------------------------------------\n");
                 scanf("%d",&menu_gestion);
 
@@ -528,7 +530,7 @@ int main(){
 
                     free(tableau_indices);
 
-                     
+
 
                     validite_fichier = 0;
                     break;
@@ -596,7 +598,45 @@ int main(){
                             break;
                         }
                         if(menu_afficher != 0){
-                            affichage(client,tableau_indices,nombre_lignes-1);
+                            do{
+                                system("cls");
+
+                                printf(" ---------------------------------------------------------------------------\n");
+                                printf("| %-73s |\n","Ligne de debut (0 si vous voulez afficher du debut) :");
+                                printf(" ---------------------------------------------------------------------------\n");
+                                scanf("%d",&debut_ligne);
+
+                                if(debut_ligne<0 || debut_ligne>nombre_lignes){
+                                    rouge();
+                                    printf(" ---------------------------------------------------------------------------\n");
+                                    printf("| %-73s |\n","/!\\ Champ invalide !");
+                                    printf(" ---------------------------------------------------------------------------\n\n");
+                                    blanc();
+
+                                    getch();
+                                }
+                            }while(debut_ligne<0 || debut_ligne>nombre_lignes);
+
+                            do{
+                                system("cls");
+
+                                printf(" ---------------------------------------------------------------------------\n");
+                                printf("| %-73s |\n","Ligne de fin (0 si vous voulez afficher jusqu'a la fin) :");
+                                printf(" ---------------------------------------------------------------------------\n");
+                                scanf("%d",&fin_ligne);
+
+                                if(fin_ligne<0 || fin_ligne>nombre_lignes){
+                                    rouge();
+                                    printf(" ---------------------------------------------------------------------------\n");
+                                    printf("| %-73s |\n","/!\\ Champ invalide !");
+                                    printf(" ---------------------------------------------------------------------------\n\n");
+                                    blanc();
+
+                                    getch();
+                                }
+                            }while(fin_ligne<0 || fin_ligne>nombre_lignes);
+
+                            affichage(client,tableau_indices,debut_ligne,fin_ligne,nombre_lignes-1,1);
                             menu_afficher=0;
                         }
                     }while(menu_afficher != 0);
@@ -613,6 +653,12 @@ int main(){
                         tableau_indices = realloc(tableau_indices,nombre_lignes*sizeof(int));
                         remplissage(tableau_indices,nombre_lignes);
                     }
+                    break;
+                case 5:
+                    modification(client,nom_fichier,"Thauvin",4976,nombre_lignes-1);
+                    break;
+                case 6:
+                    suppression(client,nom_fichier,5000,&nombre_lignes);
                     break;
                 default:
                     rouge();
