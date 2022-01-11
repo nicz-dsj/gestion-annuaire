@@ -22,9 +22,10 @@ void permuter(int*,int*);
 void tri_rapide_indirect(personne*,int*,int,int,int);
 void afficher(personne*,int*,int);
 int ajout(char*,int*);
-int recherche_dichotomique(char *,personne *, int *, int,int);
+int recherche_dichotomique(char *,personne *, int *, int,int,int);
 int encadrement_sup(char *, personne *, int *, int, int,int);
 int encadrement_inf(char *, personne *, int *, int, int);
+void filtre (personne *, int *, int,int);
 
 /**
  * @fn int validite(char* filename)
@@ -504,8 +505,8 @@ int ajout(char * filename, int * taille){
 }
 
 
-int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int taille, int mode){
-    int ind =-1, pos, trouve = 0, debut = 0, fin = taille-1;
+int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
+    int ind =-1, pos, trouve = 0;
     switch (mode)
     {
     case 1:
@@ -659,8 +660,8 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
     default:
         break;
     }
-    
-    return ind;
+    printf("%d ind recherche dicho\n",ind);
+    return ind+1;
 }
 
 int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
@@ -771,4 +772,89 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
         break;
     }
     return pos;
+}
+
+
+void filtre (personne * client,int * tab_ind_filtre, int deb,int fin){
+    char valeur[50];
+    int mode,pos_valeur;
+    do{
+        do{
+        printf("\npar quel parametre voulez vous filtrer l'annuaire?\n");
+        printf("| %-20d | %-50s |\n",0,"Stoper le filtre");
+        printf("| %-20d | %-50s |\n",1,"Filtrer par prenom");
+        printf("| %-20d | %-50s |\n",2,"Filtrer par nom");
+        printf("| %-20d | %-50s |\n",3,"Filtrer par ville");
+        printf("| %-20d | %-50s |\n",4,"Filtrer par code postal");
+        printf("| %-20d | %-50s |\n",5,"Filtrer par telephone");
+        printf("| %-20d | %-50s |\n",6,"Filtrer par mail");
+        printf("| %-20d | %-50s |\n",7,"Filtrer par profession");
+        scanf("%d", &mode);
+        }while(mode < 0 && mode >7);
+        printf(" %d",mode);
+        do{
+            switch (mode)
+            {
+            case 1:
+                printf("\nPar quel prenom voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 2:
+                printf("\nPar quel nom voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 3:
+                printf("\nPar quel ville voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 4:
+                printf("\nPar quel code postale voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 5:
+                printf("\nPar quel telephone voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 6:
+                printf("\nPar quel mail voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            case 7:
+                printf("\nPar quel profession voulez vous filtrer l'annuaire?");
+                scanf(" %s", &valeur);
+                
+                break;
+            
+            default:
+                break;
+            }
+        }while(strlen(valeur)<=0);
+        printf("\n\n %d",strlen(valeur));
+
+        tri_rapide_indirect(client,tab_ind_filtre,deb,fin,mode);
+        printf("trie effectue");
+        pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,deb,fin,mode);
+        printf(" %d", pos_valeur);
+            if (pos_valeur>=0)
+                {
+                    printf("recherche effectué\n");
+                    printf("\n %d\n",pos_valeur);
+                    deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
+                    fin=encadrement_sup(valeur,client,tab_ind_filtre,fin,pos_valeur,mode);
+                    printf("\n %d", deb);
+                    printf("\n %d",fin);
+                    affichage(client,tab_ind_filtre,fin-deb,deb,fin);
+                    deb--;
+                }
+                else{
+                    printf("le mot recherche n'est pas dans le tableau");
+                }
+
+    }while(mode != 0);
 }
