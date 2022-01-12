@@ -34,6 +34,7 @@ int main(){
     int menu_afficher=0;
     int nombre_lignes = 0;
     int *tableau_indices = NULL;
+    int *tableau_lignes_vide = NULL;
     int format;
     int debut_ligne;
     int fin_ligne;
@@ -47,6 +48,7 @@ int main(){
     char ** tableau_fichiers = NULL;
     char ** tableau_lignes = NULL;
     char choix;
+    char nom_fichier_a_ajouter[50];
 
     personne * client = NULL;
 
@@ -466,6 +468,9 @@ int main(){
             tableau_indices = malloc(nombre_lignes*sizeof(int));
             remplissage(tableau_indices,nombre_lignes);
 
+            tableau_lignes_vide = malloc((nombre_lignes-1)*sizeof(int));
+            remplissage(tableau_lignes_vide,nombre_lignes);
+
 
 
             do{
@@ -482,6 +487,7 @@ int main(){
                 printf("| %-20d | %-50s |\n",5,"Modifier un client");
                 printf("| %-20d | %-50s |\n",6,"Supprimer un client");
                 printf("| %-20d | %-50s |\n",7,"filtrer les clients");
+                printf("| %-20d | %-50s |\n",8,"créer un fichier sans les clients avec une case manquante");
                 printf(" ---------------------------------------------------------------------------\n");
                 scanf("%d",&menu_gestion);
 
@@ -620,6 +626,20 @@ int main(){
                     ind_fin_filtre = nombre_lignes;
                     filtre(client,tableau_indices,&ind_deb_filtre,&ind_fin_filtre);
                     printf("\nvaleurs ind filtre %d\n %d\n %d", ind_deb_filtre, ind_fin_filtre);
+                    break;
+                case 8:
+                    lignes_avec_vide(client,tableau_lignes_vide,nombre_lignes);
+                    for (i = 0; i < nombre_lignes-1; i++)
+                    {
+                        printf("%d\n",tableau_lignes_vide[i]);
+                    }
+                    
+                    //affichage(client,tableau_lignes_vide,0,nombre_lignes,nombre_lignes,1);
+                    //printf("entrez le nom que vous voulez donner à ce fichier\n");
+                    //scanf("%s",&nom_fichier_a_ajouter);
+                    //creation_fichier(nom_fichier_a_ajouter);
+                    //ecrire_fichier(client,nom_fichier_a_ajouter,tableau_lignes_vide,nombre_lignes);
+
                     break;
                 default:
                     printf(" ---------------------------------------------------------------------------\n");

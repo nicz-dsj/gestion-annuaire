@@ -27,7 +27,7 @@ int recherche_dichotomique(char *,personne *, int *, int,int,int);
 int encadrement_sup(char *, personne *, int *, int, int,int);
 int encadrement_inf(char *, personne *, int *, int, int);
 void filtre (personne *, int *, int*,int*);
-
+void lignes_avec_vide(personne *, int *,int);
 
 /**
  * @fn int validite(char* filename)
@@ -200,7 +200,6 @@ void lecture_lignes(char * filename, char ** tableau2d){
  * @param taille taille du tableau de structures
  * @return /
  */
-
 void lecture(char* filename, personne * client){
     FILE * pointeur = NULL;
     pointeur = fopen(filename,"a+");
@@ -375,7 +374,6 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
  * @param client
  * @param taille
  */
-
 void affichage(personne * client, int * index, int deb, int fin, int taille, int mode){
     int i;
     switch (mode){
@@ -449,7 +447,6 @@ void affichage(personne * client, int * index, int deb, int fin, int taille, int
  * @param taille correspond au nombre de clients du fichier
  * @return 1 si la fonction s'est bien exécutée, 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur
  */
-
 int ajout(char * filename, int * taille){
     personne client;
     FILE * fichier;
@@ -832,6 +829,16 @@ void modification(personne * client, char * filename, char * modif, int indice, 
     }
 }
 
+
+/**
+ * @fn void suppression(personne * client, char * filename, int indice, int * taille)
+ * @brief fonction qui permet d'enlever une ligne du fichier
+ * 
+ * @param client tableau de structure de l'annuaire
+ * @param filename nom du fichier dans lequel on est
+ * @param indice indice de la ligne à supprimer
+ * @param taille nombre de ligne du fichier
+ */
 void suppression(personne * client, char * filename, int indice, int * taille){
     int i;
     FILE * fichier;
@@ -839,17 +846,30 @@ void suppression(personne * client, char * filename, int indice, int * taille){
     if(remove(filename)==0){
         fichier = fopen(filename, "a+");
         for(i=0;i<*taille-1;i++){
-            if(i != indice){
+            if(i != indice){ //on réecris les lignes sauf si c'est celui à supprimer
                 fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[i].prenom,client[i].nom,client[i].ville,client[i].code_postal,client[i].telephone,client[i].mail,client[i].profession);
             }
         }
         fclose(fichier);
 
-        *taille = *taille-1;
+        *taille = *taille-1; // on réduit la taille après avoir enlevé la ligne
     }
 }
 
 
+
+/**
+ * @fn int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode)
+ * @brief fonction de recherche dichotomique dans le tableau de structure de l'annuaire. s'utilise dans un tableau trié.
+ * 
+ * @param valeur_recherche la valeur à chercher
+ * @param client tableau de structure de l'annuaire
+ * @param index tableau d'indice obtenue avec le tri rapide indirect
+ * @param debut début du tableau
+ * @param fin fin du tableau
+ * @param mode paramètre avec lequel on a trié le tableau
+ * @return int la position de la valeur recherché, retourne -1 si elle n'est pas trouvé
+ */
 int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
     int ind =-1, pos, trouve = 0;
     switch (mode)
@@ -1009,12 +1029,23 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
     return ind+1;
 }
 
+
+/**
+ * @fn int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode)
+ * @brief fonction qui se lance dans un tableau trié et qui permet la dernière position où se trouve une valeur donnée à partir de la position d'une de ses occurences
+ * 
+ * @param valeur_recherche la valeur à borner
+ * @param client tableau de structure de l'annuaire
+ * @param depart position de la première occurence de la valeur recherchée
+ * @param mode correspond au paramètre avec lequel le tableau est trié
+ * @return int la postion de la dernière occurence de la valeur
+ */
 int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
     int pos = depart;
     switch (mode)
     {
     case 1:
-        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
+        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0) // on augmente l'indice jusqu'à tomber sur une valeur qui ne correspond plus à la valeur recherchée
         {
             pos++;
         }
@@ -1062,12 +1093,22 @@ int encadrement_sup(char * valeur_recherche, personne * client, int * index, int
     return pos;
 }
 
+/**
+ * @fn int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode)
+ * @brief fonction qui se lance dans un tableau trié et qui permet la dernière position où se trouve une valeur donnée à partir de la position d'une de ses occurences
+ * 
+ * @param valeur_recherche la valeur à borner
+ * @param client tableau de structure de l'annuaire
+ * @param depart position de la première occurence de la valeur recherchée
+ * @param mode correspond au paramètre avec lequel le tableau est trié
+ * @return int la postion de la dernière occurence de la valeur
+ */
 int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
     int pos = depart;
     switch (mode)
     {
     case 1:
-        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0)
+        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0) // on décrémente l'indice jusqu'à tomber sur une valeur qui ne correspond plus à la valeur rechrchée
         {
             pos--;
         }
@@ -1075,11 +1116,7 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
     case 2:
         while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
         {
-            printf("\n%d",pos);
-            printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
-            printf("%d", pos-1);
             pos--;
-            printf("\n%d",pos);
         }
         break;
     case 3:
@@ -1119,10 +1156,18 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
     return pos;
 }
 
-
+/**
+ * @fn void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin)
+ * @brief fonction qui permet de filtrer l'annuaire selon des paramètres qui peuvent être superposé
+ * 
+ * @param client le tableau de structure de l'annuaire
+ * @param tab_ind_filtre tableau d'indice utiliser pour ne pas avoir à déplacer les lignes du tableau de structure quand une permutation est à faire
+ * @param deb indice de début de la partie du tableau à filtrer
+ * @param fin indice de fin de la partie du tableau à filtrer
+ */
 void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
     char valeur[50];
-    int mode,pos_valeur;
+    int mode,pos_valeur; // mode correspond au parrametre avec lequel on filtre l'annuaire et pos_valeur correspond a la position d'une ligne de l'annuaire qui répond au critère donné
     while(mode != 0){
         do{
         printf("\npar quel parametre voulez vous filtrer l'annuaire?\n");
@@ -1184,25 +1229,60 @@ void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
             }while(strlen(valeur)<=0);
             printf("\n\n %d",strlen(valeur));
             printf("\nle tri va se faire\n");
-            tri_rapide_indirect(client,tab_ind_filtre,*deb,*fin-1,mode);
+            tri_rapide_indirect(client,tab_ind_filtre,*deb,*fin-1,mode); //on trie la partie du tableau à filtrer avec le paramètre donnée. trier seulement la partie à filtrer permet d'appliquer plusieurs paramètres
             printf("trie effectue");
             printf("\non cherche la pos\n");
-            pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,*deb,*fin,mode);
+            pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,*deb,*fin,mode); // on recherche une ligne de l'annuaire qui répond aux critères données
             printf("%d\n", pos_valeur);
             if (pos_valeur>0)
             {
                 printf("recherche effectué\n");
                 printf("\n %d\n",pos_valeur);
-                *deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
+                *deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode); // encadrement des éventuelles autres lignes qui répondent aussi au critère et à début, la dernière position trouvé pour réduire la zone du filtre au résultat trouvé
                 *fin=encadrement_sup(valeur,client,tab_ind_filtre,*fin,pos_valeur,mode);
                 printf("\n %d", deb);
                 printf("\n %d",fin);
-                affichage(client,tab_ind_filtre,*deb,*fin,(*fin)-(*deb),1);
+                affichage(client,tab_ind_filtre,*deb,*fin,(*fin)-(*deb),1); //affichage des clients qui répondent au filtre
             }
             else{
                 printf("Aucun client ne répond à ce critère");
             }
         }   
+    }
+}
+
+
+
+void lignes_avec_vide(personne * client, int * index,int taille){
+    int i =0;
+    while (i<taille)
+    {
+        printf("aaaa %d\n", i);
+        if (strcmp(client[index[i]].prenom,"") == 0 || strcmp(client[index[i]].nom,"") == 0 || strcmp(client[index[i]].ville,"") == 0 || strcmp(client[index[i]].code_postal,"") == 0 || strcmp(client[index[i]].telephone,"") == 0 || strcmp(client[index[i]].mail,"") == 0 || strcmp(client[index[i]].profession,"") == 0 )
+        {   
+            printf("bbbb %d\n",index[i]);
+            index[i]= -1;
+            printf("cccc %d\n",index[i]);
+        }  
+        printf("dddd %d\n",index[i]);
+        i++;
+    } 
+}
+
+
+
+void ecrire_fichier(personne * client, char * filename, int * index, int taille){
+    int i;
+    FILE * fichier;
+
+    if(remove(filename)==0){
+        fichier = fopen(filename, "a+");
+        for(i=0;i<taille-1;i++){
+            if(index[i] != -1){
+                fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[index[i]].prenom,client[index[i]].nom,client[index[i]].ville,client[index[i]].code_postal,client[index[i]].telephone,client[index[i]].mail,client[index[i]].profession);
+            }
+        }
+        fclose(fichier);
     }
 }
 
