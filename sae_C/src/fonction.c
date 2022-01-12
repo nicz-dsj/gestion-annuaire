@@ -27,9 +27,10 @@ int recherche_dichotomique(char *,personne *, int *, int,int,int);
 int encadrement_sup(char *, personne *, int *, int, int,int);
 int encadrement_inf(char *, personne *, int *, int, int);
 void filtre (personne *, int *, int*,int*);
+void ligne_avec_vide(personne *,int *, int);
 
 
-/**
+/**w
  * @fn int validite(char* filename)
  * @brief teste l'existence du fichier
  *
@@ -1202,6 +1203,17 @@ void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
             else{
                 printf("Aucun client ne répond à ce critère");
             }
+        }   
+    }
+}
+
+void ligne_avec_vide(personne * client,int * index, int taille){
+    int i;
+    for (i = 0; i < taille; i++)
+    {
+        if (strcmp(client[index[i]].prenom, "\0") == 0 || strcmp(client[index[i]].telephone, "\0") == 0 || strcmp(client[index[i]].nom, "\0") == 0 || strcmp(client[index[i]].ville, "\0") == 0 || strcmp(client[index[i]].code_postal, "\0") == 0 || strcmp(client[index[i]].mail, "\0") == 0 || strcmp(client[index[i]].profession, "\0") == 0)
+        {
+            index[i] = -1;
         }   
     }
 }

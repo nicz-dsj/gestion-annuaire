@@ -34,6 +34,7 @@ int main(){
     int menu_afficher=0;
     int nombre_lignes = 0;
     int *tableau_indices = NULL;
+    int *tableau_indices_vide = NULL;
     int format;
     int debut_ligne;
     int fin_ligne;
@@ -465,6 +466,7 @@ int main(){
 
             tableau_indices = malloc(nombre_lignes*sizeof(int));
             remplissage(tableau_indices,nombre_lignes);
+            remplissage(tableau_indices_vide,nombre_lignes);
 
 
 
