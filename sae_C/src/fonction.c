@@ -21,23 +21,21 @@ void lecture(char*,personne*);
 void remplissage(int*,int);
 void permuter(int*,int*);
 void tri_rapide_indirect(personne*,int*,int,int,int);
-void afficher(personne*,int*,int);
-int ajout(char*,int*);
 int recherche_dichotomique(char *,personne *, int *, int,int,int);
 int encadrement_sup(char *, personne *, int *, int, int,int);
 int encadrement_inf(char *, personne *, int *, int, int);
 void filtre (personne *, int *, int*,int*);
 void ligne_avec_vide(personne *,int *, int);
+void afficher(personne*,int*,int);
+int ajout(char*,int*);
+int modification(personne*,char*,int);
+int suppression(personne*,char*,int*);
 
-
-/**w
- * @fn int validite(char* filename)
- * @brief teste l'existence du fichier
- *
- * @param filename chaine de caractere representant le nom du fichier à vérifier
- * @return 0 si le fichier n'existe pas, 1 si le fichier existe
+/**
+ * @brief 
+ * 
+ * @return int 
  */
-
 int fichiers(){
     int fichiers=0;
     DIR * dir;
@@ -64,6 +62,11 @@ int fichiers(){
     return fichiers;
 }
 
+/**
+ * @brief 
+ * 
+ * @param liste 
+ */
 void lecture_repertoire(char ** liste){
     int i;
 
@@ -89,6 +92,14 @@ void lecture_repertoire(char ** liste){
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param liste 
+ * @param fichier 
+ * @param lignes 
+ * @return int 
+ */
 int menu_selection(char ** liste, char * fichier, int lignes){
 
     int i;
@@ -132,6 +143,13 @@ int menu_selection(char ** liste, char * fichier, int lignes){
     return confirm;
 }
 
+/**
+ * @fn int validite(char* filename)
+ * @brief teste l'existence du fichier
+ *
+ * @param filename chaine de caractere representant le nom du fichier à vérifier
+ * @return 0 si le fichier n'existe pas, 1 si le fichier existe
+ */
 int validite(char* filename){
     FILE * fichier = NULL;
     fichier = fopen(filename,"r");
@@ -145,6 +163,11 @@ int validite(char* filename){
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param filename 
+ */
 void creation_fichier(char * filename){
     FILE * pointeur;
     pointeur = fopen(filename, "a+");
@@ -177,6 +200,12 @@ int lignes(char* filename){
     return nlignes;
 }
 
+/**
+ * @brief 
+ * 
+ * @param filename 
+ * @param tableau2d 
+ */
 void lecture_lignes(char * filename, char ** tableau2d){
     FILE * pointeur;
     pointeur = fopen(filename,"a+");
@@ -271,6 +300,12 @@ void lecture(char* filename, personne * client){
     fclose(pointeur);
 }
 
+/**
+ * @brief 
+ * 
+ * @param tableau 
+ * @param taille 
+ */
 void remplissage(int * tableau, int taille){
     int i;
     for(i=0;i<taille;i++){
@@ -278,6 +313,12 @@ void remplissage(int * tableau, int taille){
     }
 }
 
+/**
+ * @brief 
+ * 
+ * @param a 
+ * @param b 
+ */
 void permuter(int * a, int * b){
     int temp;
 
@@ -286,6 +327,15 @@ void permuter(int * a, int * b){
     *b = temp;
 }
 
+/**
+ * @brief 
+ * 
+ * @param client 
+ * @param index 
+ * @param deb 
+ * @param fin 
+ * @param mode 
+ */
 void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int mode){
     int pivot;
     int i;
@@ -368,17 +418,454 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
 }
 
 /**
- * @fn void affichage(char * nom,char * prenom,char * ville,char * telephone,char * code_postal,char * mail,char * profession, int num)
- *
- *
- * @brief fonction qui affiche le contenu du tableau de structure
- *
- * @param client
- * @param taille
+ * @brief 
+ * 
+ * @param client 
+ * @param saisie_nom 
+ * @param saisie_prenom 
+ * @param taille 
+ * @return int 
  */
+int recherche_seq(personne * client, char * saisie_nom, char * saisie_prenom, int taille){
+    int i, ind=-1;
 
+    for(i=0;i<taille && ind == -1;i++){
+        if (strcmp(client[i].nom,saisie_nom)==0){
+            if(strcmp(client[i].prenom,saisie_prenom)==0){
+                ind = i;
+            }
+        }
+    }
+
+    return ind;
+}
+
+/**
+ * @brief 
+ * 
+ * @param valeur_recherche 
+ * @param client 
+ * @param index 
+ * @param debut 
+ * @param fin 
+ * @param mode 
+ * @return int 
+ */
+int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
+    int ind =-1, pos, trouve = 0;
+    switch (mode)
+    {
+    case 1:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 2:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 3:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].ville) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].ville) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 4:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].code_postal) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].code_postal) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 5:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].telephone) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].telephone) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 6:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].mail) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].mail) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+    case 7:
+        while (trouve == 0 && debut <= fin)
+        {
+            pos = (debut + fin)/2;
+
+            if(strcmp(valeur_recherche, client[index[pos]].profession) == 0){
+                ind = pos;
+                trouve =1;
+            }
+            else{
+                if(strcmp(valeur_recherche, client[index[pos]].profession) > 0){
+                    printf("\nplus grand");
+                    debut = pos + 1;
+                }
+                else{
+                    printf("\nplus petit");
+                    fin = pos -1;
+                }
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+    printf("%d ind recherche dicho\n",ind);
+    return ind+1;
+}
+
+/**
+ * @brief 
+ * 
+ * @param valeur_recherche 
+ * @param client 
+ * @param index 
+ * @param taille 
+ * @param depart 
+ * @param mode 
+ * @return int 
+ */
+int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos]].nom) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
+        {
+            pos++;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
+        {
+            pos++;
+        }
+        break;
+
+    default:
+        break;
+    }
+    return pos;
+}
+
+/**
+ * @brief 
+ * 
+ * @param valeur_recherche 
+ * @param client 
+ * @param index 
+ * @param depart 
+ * @param mode 
+ * @return int 
+ */
+int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
+    int pos = depart;
+    switch (mode)
+    {
+    case 1:
+        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 2:
+        while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
+        {
+            printf("\n%d",pos);
+            printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
+            printf("%d", pos-1);
+            pos--;
+            printf("\n%d",pos);
+        }
+        break;
+    case 3:
+        while (strcmp(valeur_recherche, client[index[pos-2]].ville) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 4:
+        while (strcmp(valeur_recherche, client[index[pos-2]].code_postal) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 5:
+        while (strcmp(valeur_recherche, client[index[pos-2]].telephone) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 6:
+        while (strcmp(valeur_recherche, client[index[pos-2]].mail) == 0)
+        {
+            pos--;
+        }
+        break;
+    case 7:
+        while (strcmp(valeur_recherche, client[index[pos-2]].profession) == 0)
+        {
+            pos--;
+        }
+        break;
+
+    default:
+        break;
+    }
+    return pos;
+}
+
+/**
+ * @fn filtre(personne * client,int * tab_ind_filtre, int * deb,int * fin)
+ * 
+ * @param client correspond au tableau de structures
+ * @param tab_ind_filtre correspond au tableau d'indices
+ * @param deb correspond au début de la structure
+ * @param fin correspond a la fin de la structure
+ */
+void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
+    char valeur[50];
+    int mode,pos_valeur;
+    do{
+        do{
+            system("cls");
+
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Filtrer");
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20d | %-50s |\n",0,"Retour");
+            printf("| %-20d | %-50s |\n",1,"Filtrer par prenom");
+            printf("| %-20d | %-50s |\n",2,"Filtrer par nom");
+            printf("| %-20d | %-50s |\n",3,"Filtrer par ville");
+            printf("| %-20d | %-50s |\n",4,"Filtrer par code postal");
+            printf("| %-20d | %-50s |\n",5,"Filtrer par telephone");
+            printf("| %-20d | %-50s |\n",6,"Filtrer par mail");
+            printf("| %-20d | %-50s |\n",7,"Filtrer par profession");
+            printf(" ---------------------------------------------------------------------------\n");
+            scanf("%d", &mode);
+
+            if(mode < 0 || mode > 7){
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","/!\\ Champ invalide !");
+                printf(" ---------------------------------------------------------------------------\n\n");
+
+                getch();
+            }
+        }while(mode < 0 || mode > 7);
+        
+        if (mode>0)
+        {
+          do{
+            fflush(stdin);
+            fflush(stdout);
+            system("cls");
+
+            switch (mode)
+            {
+            case 1:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Prenom : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 2:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Nom : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 3:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Ville : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 4:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Code Postal : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 5:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Telephone : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 6:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Mail : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            case 7:
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Profession : ");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(valeur);
+                break;
+            }
+            }while(strlen(valeur)<=0);
+
+            tri_rapide_indirect(client,tab_ind_filtre,*deb,*fin-1,mode);
+            pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,*deb,*fin,mode);
+
+            if (pos_valeur>0)
+            {
+                *deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
+                *fin=encadrement_sup(valeur,client,tab_ind_filtre,*fin,pos_valeur,mode);
+                affichage(client,tab_ind_filtre,*deb,*fin,(*fin)-(*deb),1);
+            }
+            else{
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","/!\\ Aucun client ne répond a ce critere");
+                printf(" ---------------------------------------------------------------------------\n\n");
+                
+                getch();
+            }
+        }   
+    }while(mode != 0);
+}
+
+/**
+ * @brief 
+ * 
+ * @param client correspond au tableau de structures
+ * @param index correspond au tableau d'indices
+ * @param deb correspond a la ligne du début que l'on souhaite afficher
+ * @param fin correspond a la ligne de fin jusqu'où l'on souhaite afficher
+ * @param taille correspond au nombre de lignes
+ * @param mode correspond au mode d'affichage
+ */
 void affichage(personne * client, int * index, int deb, int fin, int taille, int mode){
     int i;
+    int champ_vide;
     switch (mode){
         case 1:
             if(fin==0){
@@ -438,6 +925,69 @@ void affichage(personne * client, int * index, int deb, int fin, int taille, int
 
             getch();
             break;
+        case 3:
+            if(fin==0){
+                fin = taille;
+            }
+
+            if (deb==0){
+                i=0;
+            }
+            else{
+                i=deb-1;
+            }
+
+            system("cls");
+
+            while(i<fin){
+                champ_vide = 0;
+
+                if(strcmp(client[i].prenom,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].nom,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].ville,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].code_postal,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].telephone,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].mail,"")==0){
+                    champ_vide = 1;
+                }
+                if(strcmp(client[i].profession,"")==0){
+                    champ_vide = 1;
+                }
+
+                if(champ_vide==1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| Ligne %-67d |\n",i+1);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Prenom",client[i].prenom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Nom",client[i].nom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Ville",client[i].ville);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Code Postal",client[i].code_postal);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Telephone",client[i].telephone);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Mail",client[i].mail);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Profession",client[i].profession);
+                    printf(" ---------------------------------------------------------------------------\n\n");
+                }
+
+                i++;
+            }
+            getch();
+            break;
     }
 }
 
@@ -448,9 +998,8 @@ void affichage(personne * client, int * index, int deb, int fin, int taille, int
  *
  * @param filename correspond au nom du fichier
  * @param taille correspond au nombre de clients du fichier
- * @return 1 si la fonction s'est bien exécutée, 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur
+ * @return 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur, supérieur à 0 si la fonction s'est bien exécutée
  */
-
 int ajout(char * filename, int * taille){
     personne client;
     FILE * fichier;
@@ -468,7 +1017,7 @@ int ajout(char * filename, int * taille){
         printf(" ---------------------------------------------------------------------------\n");
         printf("| %-73s |\n","Ajouter un client");
         printf(" ---------------------------------------------------------------------------\n");
-        printf("| %-73s |\n","Combien de clients voulez vous ajouter ? (maximum 10 personnes) :");
+        printf("| %-73s |\n","Combien de clients voulez vous ajouter ? (0 pour quitter) :");
         printf(" ---------------------------------------------------------------------------\n");
         scanf("%d",&n);
 
@@ -819,402 +1368,560 @@ int ajout(char * filename, int * taille){
     return n;
 }
 
-void modification(personne * client, char * filename, char * modif, int indice, int taille){
-    int i;
-    FILE * fichier;
-    strcpy(client[indice].nom,modif);
-
-    if(remove(filename)==0){
-        fichier = fopen(filename, "a+");
-        for(i=0;i<taille;i++){
-            fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[i].prenom,client[i].nom,client[i].ville,client[i].code_postal,client[i].telephone,client[i].mail,client[i].profession);
-        }
-        fclose(fichier);
-    }
-}
-
-void suppression(personne * client, char * filename, int indice, int * taille){
-    int i;
+/**
+ * @fn int modification(personne * client, char * filename, int taille)
+ * 
+ * @param client correspond au tableau de structures
+ * @param filename correspond au nom du fichier
+ * @param taille correspond au nombre de lignes du fichier
+ * @return 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur, supérieur à 0 si la fonction s'est bien exécutée
+ */
+int modification(personne * client, char * filename, int taille){
+    int i,j,ind_recherche,n,confirmation,confirmation_recherche;
+    char choix;
+    personne saisie;
     FILE * fichier;
 
-    if(remove(filename)==0){
-        fichier = fopen(filename, "a+");
-        for(i=0;i<*taille-1;i++){
-            if(i != indice){
-                fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[i].prenom,client[i].nom,client[i].ville,client[i].code_postal,client[i].telephone,client[i].mail,client[i].profession);
-            }
-        }
-        fclose(fichier);
+    do{
+        system("cls");
 
-        *taille = *taille-1;
-    }
-}
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("| %-73s |\n","Modifier des clients");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("| %-73s |\n","Combien de clients voulez vous supprimer ? (0 pour quitter) :");
+        printf(" ---------------------------------------------------------------------------\n");
+        scanf("%d",&n);
 
+        if(n<0){
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","/!\\ Champ invalide !");
+            printf(" ---------------------------------------------------------------------------\n\n");
 
-int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
-    int ind =-1, pos, trouve = 0;
-    switch (mode)
-    {
-    case 1:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
+            getch();
+        }
+    }while(n<0);
 
-            if(strcmp(valeur_recherche, client[index[pos]].prenom) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].prenom) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 2:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].nom) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].nom) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 3:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].ville) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].ville) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 4:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].code_postal) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].code_postal) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 5:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].telephone) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].telephone) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 6:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].mail) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].mail) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-    case 7:
-        while (trouve == 0 && debut <= fin)
-        {
-            pos = (debut + fin)/2;
-
-            if(strcmp(valeur_recherche, client[index[pos]].profession) == 0){
-                ind = pos;
-                trouve =1;
-            }
-            else{
-                if(strcmp(valeur_recherche, client[index[pos]].profession) > 0){
-                    printf("\nplus grand");
-                    debut = pos + 1;
-                }
-                else{
-                    printf("\nplus petit");
-                    fin = pos -1;
-                }
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-    printf("%d ind recherche dicho\n",ind);
-    return ind+1;
-}
-
-int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
-    int pos = depart;
-    switch (mode)
-    {
-    case 1:
-        while (strcmp(valeur_recherche, client[index[pos]].prenom) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 2:
-        while (strcmp(valeur_recherche, client[index[pos]].nom) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 3:
-        while (strcmp(valeur_recherche, client[index[pos]].ville) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 4:
-        while (strcmp(valeur_recherche, client[index[pos]].code_postal) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 5:
-        while (strcmp(valeur_recherche, client[index[pos]].telephone) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 6:
-        while (strcmp(valeur_recherche, client[index[pos]].mail) == 0)
-        {
-            pos++;
-        }
-        break;
-    case 7:
-        while (strcmp(valeur_recherche, client[index[pos]].profession) == 0)
-        {
-            pos++;
-        }
-        break;
-
-    default:
-        break;
-    }
-    return pos;
-}
-
-int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
-    int pos = depart;
-    switch (mode)
-    {
-    case 1:
-        while (strcmp(valeur_recherche, client[index[pos-2]].prenom) == 0)
-        {
-            pos--;
-        }
-        break;
-    case 2:
-        while (strcmp(valeur_recherche, client[index[pos-2]].nom) == 0)
-        {
-            printf("\n%d",pos);
-            printf("\n%f ",strcmp(valeur_recherche, client[index[pos-1]].nom));
-            printf("%d", pos-1);
-            pos--;
-            printf("\n%d",pos);
-        }
-        break;
-    case 3:
-        while (strcmp(valeur_recherche, client[index[pos-2]].ville) == 0)
-        {
-            pos--;
-        }
-        break;
-    case 4:
-        while (strcmp(valeur_recherche, client[index[pos-2]].code_postal) == 0)
-        {
-            pos--;
-        }
-        break;
-    case 5:
-        while (strcmp(valeur_recherche, client[index[pos-2]].telephone) == 0)
-        {
-            pos--;
-        }
-        break;
-    case 6:
-        while (strcmp(valeur_recherche, client[index[pos-2]].mail) == 0)
-        {
-            pos--;
-        }
-        break;
-    case 7:
-        while (strcmp(valeur_recherche, client[index[pos-2]].profession) == 0)
-        {
-            pos--;
-        }
-        break;
-
-    default:
-        break;
-    }
-    return pos;
-}
-
-
-void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
-    char valeur[50];
-    int mode,pos_valeur;
-    while(mode != 0){
+    for(i=0;i<n && n != 0;i++){
         do{
-        printf("\npar quel parametre voulez vous filtrer l'annuaire?\n");
-        printf("| %-20d | %-50s |\n",0,"Stoper le filtre");
-        printf("| %-20d | %-50s |\n",1,"Filtrer par prenom");
-        printf("| %-20d | %-50s |\n",2,"Filtrer par nom");
-        printf("| %-20d | %-50s |\n",3,"Filtrer par ville");
-        printf("| %-20d | %-50s |\n",4,"Filtrer par code postal");
-        printf("| %-20d | %-50s |\n",5,"Filtrer par telephone");
-        printf("| %-20d | %-50s |\n",6,"Filtrer par mail");
-        printf("| %-20d | %-50s |\n",7,"Filtrer par profession");
-        scanf("%d", &mode);
-        }while(mode < 0 && mode >7);
-        printf(" %d",mode);
-        if (mode>0)
-        {
-          do{
-            switch (mode)
-            {
-            case 1:
-                printf("\nPar quel prenom voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            system("cls");
 
-                break;
-            case 2:
-                printf("\nPar quel nom voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            fflush(stdin);
+            fflush(stdout);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Prenom :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(saisie.prenom);
 
-                break;
-            case 3:
-                printf("\nPar quel ville voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            system("cls");
 
-                break;
-            case 4:
-                printf("\nPar quel code postale voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            fflush(stdin);
+            fflush(stdout);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Nom :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(saisie.nom);
 
-                break;
-            case 5:
-                printf("\nPar quel telephone voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            ind_recherche = recherche_seq(client,saisie.nom,saisie.prenom,taille-1);
 
-                break;
-            case 6:
-                printf("\nPar quel mail voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
+            confirmation_recherche = 1;
+            if(strcmp(saisie.nom,"\0") != 0 || strcmp(saisie.prenom, "\0")!=0){
+                if(ind_recherche == -1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez rechercher un client");
+                    printf(" ---------------------------------------------------------------------------\n\n");
 
-                break;
-            case 7:
-                printf("\nPar quel profession voulez vous filtrer l'annuaire?");
-                scanf(" %s", &valeur);
-
-                break;
-
-            default:
-                break;
-            }
-            }while(strlen(valeur)<=0);
-            printf("\n\n %d",strlen(valeur));
-            printf("\nle tri va se faire\n");
-            tri_rapide_indirect(client,tab_ind_filtre,*deb,*fin-1,mode);
-            printf("trie effectue");
-            printf("\non cherche la pos\n");
-            pos_valeur = recherche_dichotomique(valeur,client,tab_ind_filtre,*deb,*fin,mode);
-            printf("%d\n", pos_valeur);
-            if (pos_valeur>0)
-            {
-                printf("recherche effectué\n");
-                printf("\n %d\n",pos_valeur);
-                *deb=encadrement_inf(valeur,client,tab_ind_filtre,pos_valeur,mode);
-                *fin=encadrement_sup(valeur,client,tab_ind_filtre,*fin,pos_valeur,mode);
-                printf("\n %d", deb);
-                printf("\n %d",fin);
-                affichage(client,tab_ind_filtre,*deb,*fin,(*fin)-(*deb),1);
+                    getch();
+                }
             }
             else{
-                printf("Aucun client ne répond à ce critère");
+                confirmation_recherche = 0;
             }
-        }   
+        }while(ind_recherche==-1);
+
+        if(ind_recherche != -1 && confirmation_recherche == 1){
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Client a modifier");
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Prenom",client[ind_recherche].prenom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Nom",client[ind_recherche].nom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Ville",client[ind_recherche].ville);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Code Postal",client[ind_recherche].code_postal);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Telephone",client[ind_recherche].telephone);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Mail",client[ind_recherche].mail);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Profession",client[ind_recherche].profession);
+            printf(" ---------------------------------------------------------------------------\n\n");
+
+            getch();
+
+            system("cls");
+
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","(i) Lors de votre saisie veuillez ne pas mettre de virgule");
+            printf(" ---------------------------------------------------------------------------\n\n");
+
+            getch();
+
+            fflush(stdin);
+            fflush(stdout);
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Prenom : (touche espace pour passer) :");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.prenom);
+
+                confirmation = ctrl_virgule(saisie.prenom,strlen(saisie.prenom));
+
+                if (strcmp(saisie.prenom,"\0") !=0 ){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation = 1;
+                }
+            }while(confirmation!=1);
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Nom (touche espace pour passer) :");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.nom);
+
+                confirmation = ctrl_virgule(saisie.nom,strlen(saisie.nom));
+
+                if (strcmp(saisie.nom,"\0") !=0 ){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation = 1;
+                }
+            }while(confirmation!=1);
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Ville (touche espace pour passer) :");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.ville);
+
+                confirmation = ctrl_virgule(saisie.ville,strlen(saisie.ville));
+
+                if (strcmp(saisie.ville,"\0") !=0 ){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation = 1;
+                }
+            }while(confirmation!=1);
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Code Postal (touche espace pour passer) :");
+                printf("| %-73s |\n","(format : \"00000\")");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.code_postal);
+
+                confirmation = format_code_postal(saisie.code_postal,strlen(saisie.code_postal));
+
+                if(strcmp(saisie.code_postal,"\0") != 0){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez respecter le format \"000000\"");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                    else if(confirmation==-1){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation = 1;
+                }
+            }while(confirmation!=1);
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Telephone (touche espace pour passer) :");
+                printf("| %-73s |\n","(format : \"00.00.00.00.00\")");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.telephone);
+
+                confirmation = format_telephone(saisie.telephone,strlen(saisie.telephone));
+
+                if(strcmp(saisie.telephone,"\0")!=0){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez respecter le format \"00.00.00.00.00\"");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                    else if(confirmation==-1){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation=1;
+                }
+            }while(confirmation!=1);
+
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Mail (touche espace pour passer) :");
+                printf("| %-73s |\n","(format : \"texte@texte.domaine\")");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.mail);
+
+                confirmation = format_mail(saisie.mail,strlen(saisie.mail));
+
+                if(strcmp(saisie.mail,"\0")!=0){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez respecter le format \"texte@texte.domaine\"");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                    else if(confirmation==-1){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation=1;
+                }
+            }while(confirmation!=1);
+
+            do{
+                system("cls");
+
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Profession (touche espace pour passer) :");
+                printf(" ---------------------------------------------------------------------------\n");
+                gets(saisie.profession);
+
+                confirmation = ctrl_virgule(saisie.profession,strlen(saisie.profession));
+
+                if (strcmp(saisie.profession,"\0") !=0 ){
+                    if(confirmation==0){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Veuillez ne pas mettre de virgule");
+                        printf(" ---------------------------------------------------------------------------\n");
+
+                        getch();
+                    }
+                }
+                else{
+                    confirmation = 1;
+                }
+            }while(confirmation!=1);
+
+            system("cls");
+
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Champs mis a jour");
+            printf(" ---------------------------------------------------------------------------\n");
+            if(strcmp(saisie.nom,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Prenom",saisie.prenom);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.prenom,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Nom",saisie.nom);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.ville,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Ville",saisie.ville);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.code_postal,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Code Postal",saisie.code_postal);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.telephone,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Telephone",saisie.telephone);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.mail,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Mail",saisie.mail);
+                printf(" ---------------------------------------------------------------------------\n");
+            }
+            if(strcmp(saisie.profession,"\0")!=0){
+                printf("| %-20s | %-50s |\n","Profession",saisie.profession);
+                printf(" ---------------------------------------------------------------------------\n\n");
+            }
+            getch();
+
+            do{
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Confirmer la modification du client ? :");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","y","Oui");
+                printf("| %-20s | %-50s |\n","n","Non");
+                printf(" ---------------------------------------------------------------------------\n");
+                scanf(" %c",&choix);
+
+                switch(choix){
+                    case 'y':
+                        if(remove(filename)==0){
+                            if(strcmp(saisie.nom,"\0")!=0){
+                                strcpy(client[ind_recherche].nom,saisie.nom);
+                            }
+
+                            if(strcmp(saisie.prenom,"\0")!=0){
+                                strcpy(client[ind_recherche].prenom,saisie.prenom);
+                            }
+
+                            if(strcmp(saisie.ville,"\0")!=0){
+                                strcpy(client[ind_recherche].ville,saisie.ville);
+                            }
+
+                            if(strcmp(saisie.code_postal,"\0")!=0){
+                                strcpy(client[ind_recherche].code_postal,saisie.code_postal);
+                            }
+
+                            if(strcmp(saisie.telephone,"\0")!=0){
+                                strcpy(client[ind_recherche].telephone,saisie.telephone);
+                            }
+
+                            if(strcmp(saisie.mail,"\0")!=0){
+                                strcpy(client[ind_recherche].mail,saisie.mail);
+                            }
+
+                            if(strcmp(saisie.profession,"\0")!=0){
+                                strcpy(client[ind_recherche].profession,saisie.profession);
+                            }
+
+                            fichier = fopen(filename, "a+");
+
+                            for(j=0;j<taille;j++){
+                                fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[j].prenom,client[j].nom,client[j].ville,client[j].code_postal,client[j].telephone,client[j].mail,client[j].profession);
+                            }
+                            fclose(fichier);
+
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","Client modifie");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+
+                            getch();
+                        }
+                        else{
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Erreur lors de la modification du client");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
+                        break;
+                    case 'n':
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Annulation du processus");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+
+                        getch();
+                        break;
+                    default:
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Champ invalide !");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+
+                        getch();
+                        break;
+                }
+            }while(choix != 'y' && choix != 'n');         
+        }
+
     }
+
+    return n;
 }
 
-void ligne_avec_vide(personne * client,int * index, int taille){
-    int i;
-    for (i = 0; i < taille; i++)
-    {
-        if (strcmp(client[index[i]].prenom, "\0") == 0 || strcmp(client[index[i]].telephone, "\0") == 0 || strcmp(client[index[i]].nom, "\0") == 0 || strcmp(client[index[i]].ville, "\0") == 0 || strcmp(client[index[i]].code_postal, "\0") == 0 || strcmp(client[index[i]].mail, "\0") == 0 || strcmp(client[index[i]].profession, "\0") == 0)
-        {
-            index[i] = -1;
-        }   
-    }
-}
+/**
+ * @fn suppression(personne * client, char * filename, int * taille)
+ * 
+ * @param client correspond au tableau de structures
+ * @param filename correspond au nom du fichier
+ * @param taille correspond au nombre de lignes du fichier
+ * @return 0 si l'utilisateur souhaite quitter la fonction ou si il y a erreur, supérieur à 0 si la fonction s'est bien exécutée
+ */
+int suppression(personne * client, char * filename, int * taille){
+    int i,j,ind_recherche,n,confirmation_recherche;
+    char choix;
+    personne saisie;
+    FILE * fichier;
 
+    do{
+        system("cls");
+
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("| %-73s |\n","Supprimer des clients");
+        printf(" ---------------------------------------------------------------------------\n");
+        printf("| %-73s |\n","Combien de clients voulez vous supprimer ? :");
+        printf(" ---------------------------------------------------------------------------\n");
+        scanf("%d",&n);
+
+        if(n<0){
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","/!\\ Champ invalide !");
+            printf(" ---------------------------------------------------------------------------\n\n");
+
+            getch();
+        }
+    }while(n<0);
+
+    for(i=0;i<n && n!=0;i++){
+        do{
+            system("cls");
+
+            fflush(stdin);
+            fflush(stdout);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Prenom :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(saisie.prenom);
+
+            system("cls");
+
+            fflush(stdin);
+            fflush(stdout);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Nom :");
+            printf(" ---------------------------------------------------------------------------\n");
+            gets(saisie.nom);
+
+            ind_recherche = recherche_seq(client,saisie.nom,saisie.prenom,*taille-1);
+
+            confirmation_recherche = 1;
+            if(strcmp(saisie.nom,"\0") != 0 || strcmp(saisie.prenom, "\0")!=0){
+                if(ind_recherche == -1){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","/!\\ Veuillez rechercher un client");
+                    printf(" ---------------------------------------------------------------------------\n\n");
+
+                    getch();
+                }
+            }
+            else{
+                confirmation_recherche = 0;
+            }
+        }while(ind_recherche==-1);
+        
+        if(ind_recherche != -1 && confirmation_recherche == 1){
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-73s |\n","Client a supprimer");
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Prenom",client[ind_recherche].prenom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Nom",client[ind_recherche].nom);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Ville",client[ind_recherche].ville);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Code Postal",client[ind_recherche].code_postal);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Telephone",client[ind_recherche].telephone);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Mail",client[ind_recherche].mail);
+            printf(" ---------------------------------------------------------------------------\n");
+            printf("| %-20s | %-50s |\n","Profession",client[ind_recherche].profession);
+            printf(" ---------------------------------------------------------------------------\n\n");
+
+            getch();
+
+            do{
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-73s |\n","Confirmer la suppression du client ? :");
+                printf(" ---------------------------------------------------------------------------\n");
+                printf("| %-20s | %-50s |\n","y","Oui");
+                printf("| %-20s | %-50s |\n","n","Non");
+                printf(" ---------------------------------------------------------------------------\n");
+                scanf(" %c",&choix);
+
+                switch(choix){
+                    case 'y':
+                        if(remove(filename)==0){
+                            fichier = fopen(filename, "a+");
+                            for(j=0;j<*taille-1;j++){
+                                if(j != ind_recherche){
+                                    fprintf(fichier,"%s,%s,%s,%s,%s,%s,%s\n",client[j].prenom,client[j].nom,client[j].ville,client[j].code_postal,client[j].telephone,client[j].mail,client[j].profession);
+                                }
+                            }
+                            fclose(fichier);
+
+                            *taille = *taille-1;
+
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","Client supprime");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+
+                            getch();
+                        }
+                        else{
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Erreur lors de la suppression du client");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+                        }
+                        break;
+                    case 'n':
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Annulation du processus");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+
+                        getch();
+                        break;
+                    default:
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Champ invalide !");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+
+                        getch();
+                        break;
+                }
+            }while(choix != 'y' && choix != 'n');
+        }
+    }
+
+    return n;
+}

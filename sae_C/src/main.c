@@ -9,7 +9,6 @@
 #include "main.h"
 #include "fonction.c"
 #include "format.c"
-#include "couleur.c"
 
 /**
  * @fn int main()
@@ -40,6 +39,7 @@ int main(){
     int fin_ligne;
     int position_personne_annuaire;
     int nouv_client;
+    int ind_recherche;
     int ind_deb_filtre;
     int ind_fin_filtre;
     int mode_filtre;
@@ -49,6 +49,7 @@ int main(){
     char ** tableau_lignes = NULL;
     char choix;
 
+    personne saisie;
     personne * client = NULL;
 
     while(1){ // boucle premettant de boucler le programme
@@ -98,8 +99,8 @@ int main(){
                         printf("| %-73s |\n","Ouvrir un fichier");
                         printf(" ---------------------------------------------------------------------------\n");
                         printf("| %-20d | %-50s |\n",0,"Retour");
-                        printf("| %-20d | %-50s |\n",1,"Ouvrir un fichier par saisie");
-                        printf("| %-20d | %-50s |\n",2,"Ouvrir un fichier present par selection");
+                        printf("| %-20d | %-50s |\n",1,"Saisir un fichier");
+                        printf("| %-20d | %-50s |\n",2,"Selectionner un fichier");
                         printf(" ---------------------------------------------------------------------------\n");
                         scanf("%d",&menu_ouvrir);
 
@@ -293,8 +294,8 @@ int main(){
                         printf("| %-73s |\n","Supprimer un fichier");
                         printf(" ---------------------------------------------------------------------------\n");
                         printf("| %-20d | %-50s |\n",0,"Retour");
-                        printf("| %-20d | %-50s |\n",1,"Supprimer un fichier par saisie");
-                        printf("| %-20d | %-50s |\n",2,"Supprimer un fichier par selection");
+                        printf("| %-20d | %-50s |\n",1,"Saisir un fichier");
+                        printf("| %-20d | %-50s |\n",2,"Selectionner un fichier");
                         printf(" ---------------------------------------------------------------------------\n");
                         scanf("%d",&menu_supprimer);
 
@@ -454,8 +455,6 @@ int main(){
             getch();
         }
         else{
-            system("cls");
-
             for(i=0;i<nombre_lignes;i++){
                 free(tableau_lignes[i]);
             }
@@ -466,12 +465,11 @@ int main(){
 
             tableau_indices = malloc(nombre_lignes*sizeof(int));
             remplissage(tableau_indices,nombre_lignes);
-            remplissage(tableau_indices_vide,nombre_lignes);
 
 
 
             do{
-                
+                system("cls");
 
                 printf(" ---------------------------------------------------------------------------\n");
                 printf("| %-73s |\n","Gestion du fichier");
@@ -479,21 +477,19 @@ int main(){
                 printf("| %-20d | %-50s |\n",0,"Retour");
                 printf("| %-20d | %-50s |\n",1,"Afficher le nombre de clients");
                 printf("| %-20d | %-50s |\n",2,"Afficher les clients");
-                printf("| %-20d | %-50s |\n",3,"Rechercher un client");
-                printf("| %-20d | %-50s |\n",4,"Ajouter un client");
-                printf("| %-20d | %-50s |\n",5,"Modifier un client");
-                printf("| %-20d | %-50s |\n",6,"Supprimer un client");
-                printf("| %-20d | %-50s |\n",7,"filtrer les clients");
+                printf("| %-20d | %-50s |\n",3,"Afficher les clients (ayant des champs vides)");
+                printf("| %-20d | %-50s |\n",4,"Rechercher un client");
+                printf("| %-20d | %-50s |\n",5,"Filtrer");
+                printf("| %-20d | %-50s |\n",6,"Ajouter un client");
+                printf("| %-20d | %-50s |\n",7,"Modifier un client");
+                printf("| %-20d | %-50s |\n",8,"Supprimer un client");
                 printf(" ---------------------------------------------------------------------------\n");
                 scanf("%d",&menu_gestion);
 
                 switch (menu_gestion){ // condition sur le mode de manipulation du fichier entree par l'utilisateur
                 case 0:
                     free(client);
-
                     free(tableau_indices);
-
-
 
                     validite_fichier = 0;
                     break;
@@ -599,8 +595,80 @@ int main(){
                     }while(menu_afficher != 0);
                     break;
                 case 3:
+                    do{
+                        system("cls");
+
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Ligne de debut (0 si vous voulez afficher du debut) :");
+                        printf(" ---------------------------------------------------------------------------\n");
+                        scanf("%d",&debut_ligne);
+
+                        if(debut_ligne<0 || debut_ligne>nombre_lignes){
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Champ invalide !");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+
+                            getch();
+                        }
+                    }while(debut_ligne<0 || debut_ligne>nombre_lignes);
+
+                    do{
+                        system("cls");
+
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","Ligne de fin (0 si vous voulez afficher jusqu'a la fin) :");
+                        printf(" ---------------------------------------------------------------------------\n");
+                        scanf("%d",&fin_ligne);
+
+                        if(fin_ligne<0 || fin_ligne>nombre_lignes){
+                            printf(" ---------------------------------------------------------------------------\n");
+                            printf("| %-73s |\n","/!\\ Champ invalide !");
+                            printf(" ---------------------------------------------------------------------------\n\n");
+
+                            getch();
+                        }
+                    }while(fin_ligne<0 || fin_ligne>nombre_lignes);
+
+                    affichage(client,tableau_indices,debut_ligne,fin_ligne,nombre_lignes-1,3);
                     break;
                 case 4:
+                    system("cls");
+
+                    fflush(stdin);
+                    fflush(stdout);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","Prenom :");
+                    printf(" ---------------------------------------------------------------------------\n");
+                    gets(saisie.prenom);
+
+                    system("cls");
+
+                    fflush(stdin);
+                    fflush(stdout);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-73s |\n","Nom :");
+                    printf(" ---------------------------------------------------------------------------\n");
+                    gets(saisie.nom);
+
+                    ind_recherche = recherche_seq(client,saisie.nom,saisie.prenom,nombre_lignes-1);
+
+                    if(ind_recherche == -1){
+                        printf(" ---------------------------------------------------------------------------\n");
+                        printf("| %-73s |\n","/!\\ Ce client ne figure pas dans ce fichier");
+                        printf(" ---------------------------------------------------------------------------\n\n");
+
+                        getch();
+                    }
+                    else{
+                        affichage(client,tableau_indices,ind_recherche,0,nombre_lignes-1,2);
+                    }
+                    break;
+                case 5:
+                    ind_deb_filtre = 0;
+                    ind_fin_filtre = nombre_lignes;
+                    filtre(client,tableau_indices,&ind_deb_filtre,&ind_fin_filtre);
+                    break;
+                case 6:
                     nouv_client = ajout(nom_fichier,&nombre_lignes);
 
                     if(nouv_client>0){ // ajoute une ligne de client dans le fichier
@@ -611,17 +679,19 @@ int main(){
                         remplissage(tableau_indices,nombre_lignes);
                     }
                     break;
-                case 5:
-                    modification(client,nom_fichier,"Thauvin",4976,nombre_lignes-1);
-                    break;
-                case 6:
-                    suppression(client,nom_fichier,5000,&nombre_lignes);
-                    break;
                 case 7:
-                    ind_deb_filtre = 0;
-                    ind_fin_filtre = nombre_lignes;
-                    filtre(client,tableau_indices,&ind_deb_filtre,&ind_fin_filtre);
-                    printf("\nvaleurs ind filtre %d\n %d\n %d", ind_deb_filtre, ind_fin_filtre);
+                    if(modification(client,nom_fichier,nombre_lignes-1)>0){
+                        lecture(nom_fichier,client);
+                    }
+                    break;
+                case 8:
+                    if(suppression(client,nom_fichier,&nombre_lignes)>0){
+                        client = realloc(client,nombre_lignes*sizeof(personne));
+                        lecture(nom_fichier,client);
+
+                        tableau_indices = realloc(tableau_indices,nombre_lignes*sizeof(int));
+                        remplissage(tableau_indices,nombre_lignes);
+                    }
                     break;
                 default:
                     printf(" ---------------------------------------------------------------------------\n");
