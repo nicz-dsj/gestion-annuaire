@@ -32,9 +32,9 @@ int modification(personne*,char*,int);
 int suppression(personne*,char*,int*);
 
 /**
- * @brief 
- * 
- * @return int 
+ * @brief
+ *
+ * @return int
  */
 int fichiers(){
     int fichiers=0;
@@ -63,9 +63,9 @@ int fichiers(){
 }
 
 /**
- * @brief 
- * 
- * @param liste 
+ * @brief
+ *
+ * @param liste
  */
 void lecture_repertoire(char ** liste){
     int i;
@@ -93,12 +93,12 @@ void lecture_repertoire(char ** liste){
 }
 
 /**
- * @brief 
- * 
- * @param liste 
- * @param fichier 
- * @param lignes 
- * @return int 
+ * @brief
+ *
+ * @param liste
+ * @param fichier
+ * @param lignes
+ * @return int
  */
 int menu_selection(char ** liste, char * fichier, int lignes){
 
@@ -164,9 +164,9 @@ int validite(char* filename){
 }
 
 /**
- * @brief 
- * 
- * @param filename 
+ * @brief
+ *
+ * @param filename
  */
 void creation_fichier(char * filename){
     FILE * pointeur;
@@ -201,10 +201,10 @@ int lignes(char* filename){
 }
 
 /**
- * @brief 
- * 
- * @param filename 
- * @param tableau2d 
+ * @brief
+ *
+ * @param filename
+ * @param tableau2d
  */
 void lecture_lignes(char * filename, char ** tableau2d){
     FILE * pointeur;
@@ -301,10 +301,10 @@ void lecture(char* filename, personne * client){
 }
 
 /**
- * @brief 
- * 
- * @param tableau 
- * @param taille 
+ * @brief
+ *
+ * @param tableau
+ * @param taille
  */
 void remplissage(int * tableau, int taille){
     int i;
@@ -314,10 +314,10 @@ void remplissage(int * tableau, int taille){
 }
 
 /**
- * @brief 
- * 
- * @param a 
- * @param b 
+ * @brief
+ *
+ * @param a
+ * @param b
  */
 void permuter(int * a, int * b){
     int temp;
@@ -328,13 +328,13 @@ void permuter(int * a, int * b){
 }
 
 /**
- * @brief 
- * 
- * @param client 
- * @param index 
- * @param deb 
- * @param fin 
- * @param mode 
+ * @brief
+ *
+ * @param client
+ * @param index
+ * @param deb
+ * @param fin
+ * @param mode
  */
 void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int mode){
     int pivot;
@@ -418,13 +418,13 @@ void tri_rapide_indirect(personne * client, int * index, int deb, int fin, int m
 }
 
 /**
- * @brief 
- * 
- * @param client 
- * @param saisie_nom 
- * @param saisie_prenom 
- * @param taille 
- * @return int 
+ * @brief
+ *
+ * @param client
+ * @param saisie_nom
+ * @param saisie_prenom
+ * @param taille
+ * @return int
  */
 int recherche_seq(personne * client, char * saisie_nom, char * saisie_prenom, int taille){
     int i, ind=-1;
@@ -441,15 +441,15 @@ int recherche_seq(personne * client, char * saisie_nom, char * saisie_prenom, in
 }
 
 /**
- * @brief 
- * 
- * @param valeur_recherche 
- * @param client 
- * @param index 
- * @param debut 
- * @param fin 
- * @param mode 
- * @return int 
+ * @brief
+ *
+ * @param valeur_recherche
+ * @param client
+ * @param index
+ * @param debut
+ * @param fin
+ * @param mode
+ * @return int
  */
 int recherche_dichotomique(char * valeur_recherche,personne * client, int * index, int debut, int fin, int mode){
     int ind =-1, pos, trouve = 0;
@@ -611,15 +611,15 @@ int recherche_dichotomique(char * valeur_recherche,personne * client, int * inde
 }
 
 /**
- * @brief 
- * 
- * @param valeur_recherche 
- * @param client 
- * @param index 
- * @param taille 
- * @param depart 
- * @param mode 
- * @return int 
+ * @brief
+ *
+ * @param valeur_recherche
+ * @param client
+ * @param index
+ * @param taille
+ * @param depart
+ * @param mode
+ * @return int
  */
 int encadrement_sup(char * valeur_recherche, personne * client, int * index, int taille, int depart,int mode){
     int pos = depart;
@@ -675,14 +675,14 @@ int encadrement_sup(char * valeur_recherche, personne * client, int * index, int
 }
 
 /**
- * @brief 
- * 
- * @param valeur_recherche 
- * @param client 
- * @param index 
- * @param depart 
- * @param mode 
- * @return int 
+ * @brief
+ *
+ * @param valeur_recherche
+ * @param client
+ * @param index
+ * @param depart
+ * @param mode
+ * @return int
  */
 int encadrement_inf(char * valeur_recherche, personne * client, int * index, int depart,int mode){
     int pos = depart;
@@ -743,7 +743,7 @@ int encadrement_inf(char * valeur_recherche, personne * client, int * index, int
 
 /**
  * @fn filtre(personne * client,int * tab_ind_filtre, int * deb,int * fin)
- * 
+ *
  * @param client correspond au tableau de structures
  * @param tab_ind_filtre correspond au tableau d'indices
  * @param deb correspond au début de la structure
@@ -778,7 +778,7 @@ void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
                 getch();
             }
         }while(mode < 0 || mode > 7);
-        
+
         if (mode>0)
         {
           do{
@@ -846,16 +846,16 @@ void filtre (personne * client,int * tab_ind_filtre, int * deb,int * fin){
                 printf(" ---------------------------------------------------------------------------\n");
                 printf("| %-73s |\n","/!\\ Aucun client ne répond a ce critere");
                 printf(" ---------------------------------------------------------------------------\n\n");
-                
+
                 getch();
             }
-        }   
+        }
     }while(mode != 0);
 }
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  * @param client correspond au tableau de structures
  * @param index correspond au tableau d'indices
  * @param deb correspond a la ligne du début que l'on souhaite afficher
@@ -926,6 +926,63 @@ void affichage(personne * client, int * index, int deb, int fin, int taille, int
             getch();
             break;
         case 3:
+            if(fin==0){
+                fin = taille;
+            }
+
+            if (deb==0){
+                i=0;
+            }
+            else{
+                i=deb-1;
+            }
+
+            system("cls");
+
+            while(i<fin){
+                champ_vide = 1;
+
+                if(strcmp(client[i].prenom,"")!=0){
+                    if(strcmp(client[i].nom,"")!=0){
+                        if(strcmp(client[i].ville,"")!=0){
+                            if(strcmp(client[i].code_postal,"")!=0){
+                                if(strcmp(client[i].telephone,"")!=0){
+                                    if(strcmp(client[i].mail,"")!=0){
+                                        if(strcmp(client[i].profession,"")!=0){
+                                            champ_vide = 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(champ_vide==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| Ligne %-67d |\n",i+1);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Prenom",client[i].prenom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Nom",client[i].nom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Ville",client[i].ville);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Code Postal",client[i].code_postal);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Telephone",client[i].telephone);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Mail",client[i].mail);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Profession",client[i].profession);
+                    printf(" ---------------------------------------------------------------------------\n\n");
+                }
+
+                i++;
+            }
+            getch();
+            break;
+        case 4:
             if(fin==0){
                 fin = taille;
             }
@@ -1335,7 +1392,7 @@ int ajout(char * filename, int * taille){
                     if(strcmp(client.profession, "\0") != 0){
                         fprintf(fichier,"%s",client.profession);
                     }
-                    fprintf(fichier,"\0");
+                    fprintf(fichier,"\n");
 
                     *taille = *taille + 1;
 
@@ -1370,7 +1427,7 @@ int ajout(char * filename, int * taille){
 
 /**
  * @fn int modification(personne * client, char * filename, int taille)
- * 
+ *
  * @param client correspond au tableau de structures
  * @param filename correspond au nom du fichier
  * @param taille correspond au nombre de lignes du fichier
@@ -1771,7 +1828,7 @@ int modification(personne * client, char * filename, int taille){
                         getch();
                         break;
                 }
-            }while(choix != 'y' && choix != 'n');         
+            }while(choix != 'y' && choix != 'n');
         }
 
     }
@@ -1781,7 +1838,7 @@ int modification(personne * client, char * filename, int taille){
 
 /**
  * @fn suppression(personne * client, char * filename, int * taille)
- * 
+ *
  * @param client correspond au tableau de structures
  * @param filename correspond au nom du fichier
  * @param taille correspond au nombre de lignes du fichier
@@ -1848,7 +1905,7 @@ int suppression(personne * client, char * filename, int * taille){
                 confirmation_recherche = 0;
             }
         }while(ind_recherche==-1);
-        
+
         if(ind_recherche != -1 && confirmation_recherche == 1){
             printf(" ---------------------------------------------------------------------------\n");
             printf("| %-73s |\n","Client a supprimer");
