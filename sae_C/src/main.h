@@ -4,6 +4,7 @@
 #include <time.h>
 #include <dirent.h>
 #include <ctype.h>
+#include <conio.h>
 
 
 #define taille_ligne 256
