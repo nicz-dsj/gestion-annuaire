@@ -940,6 +940,63 @@ void affichage(personne * client, int * index, int deb, int fin, int taille, int
             system("cls");
 
             while(i<fin){
+                champ_vide = 1;
+
+                if(strcmp(client[i].prenom,"")!=0){
+                    if(strcmp(client[i].nom,"")!=0){
+                        if(strcmp(client[i].ville,"")!=0){
+                            if(strcmp(client[i].code_postal,"")!=0){
+                                if(strcmp(client[i].telephone,"")!=0){
+                                    if(strcmp(client[i].mail,"")!=0){
+                                        if(strcmp(client[i].profession,"")!=0){
+                                            champ_vide = 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(champ_vide==0){
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| Ligne %-67d |\n",i+1);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Prenom",client[i].prenom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Nom",client[i].nom);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Ville",client[i].ville);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Code Postal",client[i].code_postal);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Telephone",client[i].telephone);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Mail",client[i].mail);
+                    printf(" ---------------------------------------------------------------------------\n");
+                    printf("| %-20s | %-50s |\n","Profession",client[i].profession);
+                    printf(" ---------------------------------------------------------------------------\n\n");
+                }
+
+                i++;
+            }
+            getch();
+            break;
+        case 4:
+            if(fin==0){
+                fin = taille;
+            }
+
+            if (deb==0){
+                i=0;
+            }
+            else{
+                i=deb-1;
+            }
+
+            system("cls");
+
+            while(i<fin){
                 champ_vide = 0;
 
                 if(strcmp(client[i].prenom,"")==0){
